@@ -1,0 +1,91 @@
+{% extends 'purchase_order_management/base.html' %}
+
+{% load staticfiles %}
+
+{% block stylesheets %}
+<link rel="stylesheet" href="//cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css">
+{% endblock %}
+
+{% block scripts %}
+    <script src="//cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
+
+    <script src="{% static 'js/jquery.bootstrap.modal.forms.js' %}"></script>
+{% endblock %}
+
+{% block content %}
+
+    <div class="modal fade" tabindex="-1" role="dialog" id="modal">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content"></div>
+        </div>
+    </div>
+
+    <hr>
+
+    <table id="purchaseOrderList">
+        <thead>
+            <tr>
+                <th>Purchase Order ID</th>
+                <th>Purchase Order Date</th>
+                <th>Purchase Order Client Name</th>
+                <th>Purchase Order Item</th>
+                <th>Purchase Order Item Quantity</th>
+                <th>Process List</th>
+                <th>Summary</th>
+                <th>Delete</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for purchase_order,process_list in purchase_orders %}
+                <tr>
+                    <td>{{purchase_order.pk}}</td>
+                    <td>{{purchase_order.purchase_order_date_created_on}}</td>
+                    <td>{{purchase_order.purchase_order_client_name}}</td>
+                    <td>{{purchase_order.purchase_order_item}}</td>
+                    <td>{{purchase_order.purchase_order_item_quantity}}</td>
+                    <td>
+                        {% for process in process_list %}
+                            {{process.process_name}},
+                        {% endfor %}
+                    </td>
+                    <td>
+                        <center>
+                            <button type="button" class="btn btn-sm btn-primary">
+                                Summary
+                            </button>
+                        </center>
+                    </td>
+                    <td>
+                        <center>
+                            <button type="button" class="delete-purchase btn btn-sm btn-danger" data-id="{% url 'purchase_order_management:delete_purchase_order_list' purchase_order.pk %}">
+                                <span class="fa fa-trash"></span>
+                            </button>
+                        </center>
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+        <tfoot>
+        </tfoot>
+    </table>
+
+{% endblock %}
+
+{% block extrascripts %}
+
+    <script>
+        $(document).ready( function () {
+            $('#purchaseOrderList').DataTable();
+        } );
+    </script>
+
+    <script type="text/javascript">
+        $(function () {
+            // Delete book buttons
+            $(".delete-purchase").each(function () {
+                $(this).modalForm({formURL: $(this).data('id')});
+            });
+
+        });
+</script>    
+{% endblock%}
