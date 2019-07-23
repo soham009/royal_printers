@@ -1,0 +1,1021 @@
+{% extends 'purchase_order_management/base.html' %}
+
+{% block content %}
+<hr>
+
+<h1>Fill Purchase Orders Details</h1>
+
+<hr>
+
+<!--GENERAL DETAILS FORM STARTS-->
+<!--TEXT FIELDS START HERE-->
+<form action="#" method="post">
+	<div class="form-row">
+		<div class="col">
+			<label for="job_name">Job Name</label>
+			<input type="text" class="form-control" id="job_name" name="job_name">
+		</div>
+		<div class="col">
+			<label for="job_number">Job Number</label>
+			<input type="text" class="form-control" id="job_number" name="job_number">
+		</div>
+		<div class="col">
+			<label for="po_number">PO Number</label>
+			<input type="text" class="form-control" id="po_number" name="po_number">
+		</div>
+	</div>
+
+	<div class="form-row">
+		<div class="col">
+			<label for="items">Items</label>
+			<input type="text" class="form-control" id="items" name="items">
+		</div>
+		<div class="col">
+			<label for="quantity">Quantity</label>
+			<input type="text" class="form-control" id="quantity" name="quantity">
+		</div>
+		<div class="col">
+			<label for="size">Size</label>
+			<input type="text" class="form-control" id="size" name="size">
+		</div>
+		<div class="col">
+			<label for="number_of_columns">Number of Columns</label>
+			<input type="text" class="form-control" id="number_of_columns" name="number_of_columns">
+		</div>
+	</div>
+
+	<div class="form-row">
+		<div class="col">
+			<label for="purchase_date">Purchase Date</label>
+			<input type="date" class="form-control" id="purchase_date" name="purchase_date">
+		</div>
+		<div class="col">
+			<label for="purchase_by">Purchase By</label>
+			<input type="date" class="form-control" id="purchase_by" name="purchase_by">
+		</div>
+	</div>
+	<!--TEXTFIELDS END HERE-->
+	<br>
+
+
+	<!--CHECKBOX STARTS HERE-->
+	<div class="form-row">
+		<label>Select the details you want : </label>
+	</div>
+
+	<div class="form-row">
+		<div class="col">
+			<label for="paper_details_checkbox" class="checkbox-inline">Paper</label>
+			<input type="checkbox" value="paper_details" id="paper_details_checkbox" name="paper_details_checkbox">
+		</div>
+
+		<div class="col">
+			<label for="packaging_details_checkbox" class="checkbox-inline">Packaging</label>
+			<input type="checkbox" value="packaging_details" id="packaging_details_checkbox" name="packaging_details_checkbox">
+		</div>
+
+		<div class="col">
+			<label for="binding_checkbox" class="checkbox-inline">Binding</label>
+			<input type="checkbox" value="binding" id="binding_checkbox" name="binding_checkbox">
+		</div>
+
+		<div class="col">
+			<label for="ctp_checkbox" class="checkbox-inline">CTP</label>
+			<input type="checkbox" value="ctp" id="ctp_checkbox" name="ctp_checkbox">
+		</div>
+
+		<div class="col">
+			<label for="sp_checkbox" class="checkbox-inline">Special Process</label>
+			<input type="checkbox" value="sp" id="sp_checkbox" name="sp_checkbox">
+		</div>
+
+		<div class="col">
+			<label for="raise_checkbox" class="checkbox-inline">Raise</label>
+			<input type="checkbox" value="raise" id="raise_checkbox" name="raise_checkbox">
+		</div>
+
+	</div>
+
+	<div class="form-row">
+		<div class="col">
+			<label class="vanish_checkbox">Vanish</label>
+			<input type="checkbox" value="binding" id="vanish_checkbox" name="vanish_checkbox">
+		</div>
+
+		<div class="col">
+			<label for="lamination_checkbox" class="checkbox-inline">Lamination</label>
+			<input type="checkbox" value="lamination" id="lamination_checkbox" name="lamination_checkbox">
+		</div>
+
+		<div class="col">
+			<label for="punch_checkbox" class="checkbox-inline">Punch</label>
+			<input type="checkbox" value="punch" id="punch_checkbox" name="punch_checkbox">
+		</div>
+
+		<div class="col">
+			<label for="cutting_checkbox" class="checkbox-inline">Cutting</label>
+			<input type="checkbox" value="cutting" id="cutting_checkbox" name="cutting_checkbox">
+		</div>
+
+		<div class="col">
+			<label for="punching_checkbox" class="checkbox-inline">Punching</label>
+			<input type="checkbox" value="punching" id="punching_checkbox" name="punching_checkbox">
+		</div>
+
+		<div class="col">
+			<label for="pasting_checkbox" class="checkbox-inline">Pasting</label>
+			<input type="checkbox" value="pasting" id="pasting_checkbox" name="pasting_checkbox">
+		</div>
+	</div>
+
+	<div class="form-row">
+		<div class="col">
+			<label for="folding_checkbox" class="checkbox-inline">Folding</label>
+			<input type="checkbox" value="folding" id="folding_checkbox" name="folding_checkbox">
+		</div>
+
+		<div class="col" id="aligned">
+			<label for="creasing_checkbox" class="checkbox-inline">Creasing</label>
+			<input type="checkbox" value="creasing" id="creasing_checkbox" name="creasing_checkbox">
+		</div>
+
+		<div class="col" id="aligned">
+			<label for="positive_checkbox" class="checkbox-inline">Positive</label>
+			<input type="checkbox" value="positive" id="positive_checkbox" name="positive_checkbox">
+		</div>
+
+		<div class="col" id="aligned">
+			<label for="uv_checkbox" class="checkbox-inline">UV</label>
+			<input type="checkbox" value="uv" id="uv_checkbox" name="uv_checkbox">
+		</div>
+
+		<div class="col" id="aligned">
+			<label for="fourcol_checkbox" class="checkbox-inline">4col</label>
+			<input type="checkbox" value="fourcol" id="fourcol_checkbox" name="fourcol_checkbox">
+		</div>
+
+		<div class="col" id="aligned">
+			<label> </label>
+		</div>
+	</div>
+	<!--CHECKBOX ENDS HERE-->
+</form>
+<!--GENERAL DETAILS FORM ENDS-->
+<br>
+<!--FORM FOR THE SPECIFIC DETAILS STARTS HERE THEY ARE ONLY DISPLAYED WHEN THE USER CHECKS THE CHECKBOX-->
+<!--PAPER DETAILS START-->
+<div id="paper_details_form" style="display: none;">
+	<hr>
+	<h2>Paper Details</h2>
+	<hr>
+	<form action="#" method="post">
+		<div class="form-row">
+			<div class="col">
+				<label for="serial_number">Serial number</label>
+				<input class="form-control" type="text" id="paper_serial_number" name="paper_serial_number">
+			</div>
+
+			<div class="col">
+				<label for="paper_col">Col</label>
+				<input class="form-control" type="text" id="paper_col" name="paper_col">
+			</div>
+
+			<div class="col">
+				<label for="paper_size">Size</label>
+				<input class="form-control" type="text" id="paper_size" name="paper_size">
+			</div>
+		</div>
+
+		<div class="form-row">
+			<div class="col">
+				<label for="paper_gsm">GSM</label>
+				<input class="form-control" type="text" id="paper_gsm" name="paper_gsm">
+			</div>
+
+			<div class="col">
+				<label for="number_of_sheets">Number of sheets</label>
+				<input class="form-control" type="text" id="number_of_sheets">
+			</div>
+
+			<div class="col">
+				<label for="print_vendor">Vendor</label>
+				<input class="form-control" type="text" id="print_vendor" name="print_vendor">
+			</div>
+		</div>
+
+	</form>
+</div>
+<!--PAPER DETAILS END-->
+
+<!--PACKAGING DETAILS START-->
+<div id="packaging_details_form" style="display: none;">
+	<hr>
+	<h2>Packaging Details</h2>
+	<hr>
+	<form action="#" method="post">
+		<div class="form-row">
+			<div class="col">
+				<label for="serial_number">Serial number</label>
+				<input class="form-control" type="text" id="paper_serial_number" name="paper_serial_number">
+			</div>
+
+			<div class="col">
+				<label for="paper_col">Col</label>
+				<input class="form-control" type="text" id="paper_col" name="paper_col">
+			</div>
+
+			<div class="col">
+				<label for="paper_size">Size</label>
+				<input class="form-control" type="text" id="paper_size" name="paper_size">
+			</div>
+		</div>
+
+		<div class="form-row">
+			<div class="col">
+				<label for="paper_gsm">GSM</label>
+				<input class="form-control" type="text" id="paper_gsm" name="paper_gsm">
+			</div>
+
+			<div class="col">
+				<label for="number_of_sheets">Number of sheets</label>
+				<input class="form-control" type="text" id="number_of_sheets">
+			</div>
+			<div class="col">
+				<label for="print_vendor">Vendor</label>
+				<input class="form-control" type="text" id="print_vendor" name="print_vendor">
+			</div>
+		</div>
+	</form>
+</div>
+<!--PACKAGING DETAILS END-->
+
+<!--BINDING START-->
+<div id="binding_form" style="display: none;">
+	<hr>
+	<h2>Binding</h2>
+	<hr>
+	<form action="#" method="post">
+		<div class="form-row">
+			<div class="col">
+				<label for="P/f">P/f</label>
+				<input class="form-control" type="text" id="paper_P/f" name="paper_P/f">
+			</div>
+
+			<div class="col">
+				<label for="paper_SerialNo">Serial No.</label>
+				<input class="form-control" type="text" id="paper_SerialNo" name="paper_SerialNo">
+			</div>
+
+			<div class="col">
+				<label for="side/top">Side/Top</label>
+				<input class="form-control" type="text" id="side/top" name="side/top">
+			</div>
+
+			<div class="col">
+				<label for="print_vendor">Vendor</label>
+				<input class="form-control" type="text" id="print_vendor" name="print_vendor">
+			</div>
+		</div>
+
+		<div class="form-row">
+			<div class="col">
+				<label for="paper_gsm">Books/Pads</label>
+				<input class="form-control" type="text" id="paper_gsm" name="paper_gsm">
+			</div>
+
+			<div class="col">
+				<label for="number_of_sheets">Quantity</label>
+				<input class="form-control" type="text" id="number_of_sheets">
+			</div>
+
+			<div class="col">
+				<label for="binding_type">Binding Type</label>
+				<div class="form-group">
+					<select class="form-control" id="sel1">
+						<option>-Select Type--</option>
+						<option>Sada</option>
+						<option>DP</option>
+						<option>3 fold</option>
+						<option>Rexin</option>
+						<option>Cloth</option>
+						<option>Packet</option>
+						<option>Custom</option>
+					</select>
+				</div>
+			</div>
+		</div>
+	</form>
+</div>
+
+<!--BINDING END-->
+
+
+<!--CTP START-->
+<div id="ctp_form" style="display: none;">
+	<hr>
+	<h2>CTP</h2>
+	<hr>
+	<form action="#" method="post">
+		<div class="form-row">
+			<div class="col">
+				<label for="paper_col">Col</label>
+				<input class="form-control" type="text" id="paper_col" name="paper_col">
+			</div>
+
+			<div class="col">
+				<label for="paper_size">Size</label>
+				<input class="form-control" type="text" id="paper_size" name="paper_size">
+			</div>
+
+			<div class="col">
+				<label for="print_vendor">Vendor</label>
+				<input class="form-control" type="text" id="print_vendor" name="print_vendor">
+			</div>
+		</div>
+
+		<div class="form-row">
+			<div class="col">
+				<label for="number_of_sheets">Number of sheets</label>
+				<input class="form-control" type="text" id="number_of_sheets">
+			</div>
+
+			<div class="col">
+				<label for="paper_gsm">GSM</label>
+				<input class="form-control" type="text" id="paper_gsm" name="paper_gsm">
+			</div>
+
+
+		</div>
+	</form>
+</div>
+<!--CTP END-->
+
+<!--SP START-->
+<div id="sp_form" style="display: none;">
+	<hr>
+	<h2>Special Process</h2>
+	<hr>
+	<form action="#" method="post">
+		<div class="form-row">
+
+			<div class="col">
+				<label for="special_type">UV</label>
+				<div class="form-group">
+					<select class="form-control" id="sel1">
+						<option>--Select Type--</option>
+						<option>Raise UV</option>
+						<option>Embossing</option>
+						<option>Debossing</option>
+						<option>Foiling</option>
+						<option>Custom</option>
+					</select>
+				</div>
+			</div>
+
+
+			<div class="col">
+				<label for="special_type">Block</label>
+				<div class="form-group">
+					<select class="form-control" id="sel1">
+						<option>--Select Type--</option>
+						<option>Punch</option>
+						<option>Quantity</option>
+						<option>Imp</option>
+						<option>Size</option>
+						<option>Custom</option>
+					</select>
+				</div>
+			</div>
+
+			<div class="col">
+				<label for="print_vendor">Vendor</label>
+				<input class="form-control" type="text" id="print_vendor" name="print_vendor">
+			</div>
+		</div>
+	</form>
+</div>
+<!--SP END-->
+
+<!--RAISE START-->
+<div id="raise_form" style="display: none;">
+	<hr>
+	<h2>Raise</h2>
+	<hr>
+	<form action="#" method="post">
+
+
+		<div class="form-row">
+			<div class="col">
+				<label for="sel1">Type</label>
+				<div class="form-group">
+					<select class="form-control" id="sel1">
+						<option>--Select Type--</option>
+						<option>PVC</option>
+						<option>BOPP</option>
+						<option>Matt</option>
+						<option>Thermal</option>
+						<option>Custom</option>
+					</select>
+				</div>
+			</div>
+
+
+			<div class="col">
+				<label for="paper_size">Size</label>
+				<input class="form-control" type="text" id="paper_size" name="paper_size">
+			</div>
+		</div>
+
+		<div class="form-row">
+			<div class="col">
+				<label for="print_vendor">Vendor</label>
+				<input class="form-control" type="text" id="print_vendor" name="print_vendor">
+			</div>
+
+			<div class="col">
+				<label for="number_of_sheets">Number of sheets</label>
+				<input class="form-control" type="text" id="number_of_sheets">
+			</div>
+		</div>
+	</form>
+</div>
+
+<!--RAISE END-->
+
+<!--VANISH START-->
+<div id="vanish_form" style="display: none;">
+	<hr>
+	<h2>Vanish</h2>
+	<hr>
+	<form action="#" method="post">
+		<div class="form-row">
+
+			<div class="col">
+				<label for="sel1">Type</label>
+				<div class="form-group">
+					<select class="form-control" id="sel1">
+						<option>--Select Type--</option>
+						<option>PVC</option>
+						<option>BOPP</option>
+						<option>Matt</option>
+						<option>Thermal</option>
+						<option>Custom</option>
+					</select>
+				</div>
+			</div>
+
+			<div class="col">
+				<label for="paper_size">Size</label>
+				<input class="form-control" type="text" id="paper_size" name="paper_size">
+			</div>
+		</div>
+
+		<div class="form-row">
+			<div class="col">
+				<label for="print_vendor">Vendor</label>
+				<input class="form-control" type="text" id="print_vendor" name="print_vendor">
+			</div>
+
+			<div class="col">
+				<label for="number_of_sheets">Number of sheets</label>
+				<input class="form-control" type="text" id="number_of_sheets">
+			</div>
+		</div>
+	</form>
+</div>
+<!--VANISH END-->
+
+
+<!--LAMINATION START-->
+<div id="lamination_form" style="display: none;">
+	<hr>
+	<h2>Lamination</h2>
+	<hr>
+	<form action="#" method="post">
+		<div class="form-row">
+
+			<div class="col">
+				<label for="sel1">Type</label>
+				<div class="form-group">
+					<select class="form-control" id="sel1">
+						<option>--Select Type--</option>
+						<option>PVC</option>
+						<option>BOPP</option>
+						<option>Matt</option>
+						<option>Thermal</option>
+						<option>Custom</option>
+					</select>
+				</div>
+			</div>
+
+			<div class="col">
+				<label for="paper_size">Size</label>
+				<input class="form-control" type="text" id="paper_size" name="paper_size">
+			</div>
+		</div>
+
+		<div class="form-row">
+			<div class="col">
+				<label for="print_vendor">Vendor</label>
+				<input class="form-control" type="text" id="print_vendor" name="print_vendor">
+			</div>
+
+			<div class="col">
+				<label for="number_of_sheets">Number of sheets</label>
+				<input class="form-control" type="text" id="number_of_sheets">
+			</div>
+		</div>
+	</form>
+</div>
+<!--LAMINATION END-->
+
+<!--PUNCH START-->
+<div id="punch_form" style="display: none;">
+	<hr>
+	<h2>Punch</h2>
+	<hr>
+	<form action="#" method="post">
+		<div class="form-row">
+			<div class="col">
+				<label for="No_sheets">No. of Sheets</label>
+				<input class="form-control" type="text" id="no_sheets" name="no_sheets">
+			</div>
+
+			<div class="col">
+				<label for="paper_size">Size</label>
+				<input class="form-control" type="text" id="paper_size" name="paper_size">
+			</div>
+
+			<div class="col">
+				<label for="print_vendor">Vendor</label>
+				<input class="form-control" type="text" id="print_vendor" name="print_vendor">
+			</div>
+
+		</div>
+	</form>
+</div>
+<!--PUNCH END-->
+
+<!--CUTTING START-->
+<div id="cutting_form" style="display: none;">
+	<hr>
+	<h2>Cutting</h2>
+	<hr>
+	<form action="#" method="post">
+		<div class="form-row">
+
+			<div class="col">
+				<label for="paper_size">Size</label>
+				<input class="form-control" type="text" id="paper_size" name="paper_size">
+			</div>
+
+			<div class="col">
+				<label for="quantity">Quantity</label>
+				<input class="form-control" type="text" id="quantity" name="quantity">
+			</div>
+		</div>
+
+		<div class="form-row">
+			<div class="col">
+				<label for="print_vendor">Vendor</label>
+				<input class="form-control" type="text" id="print_vendor" name="print_vendor">
+			</div>
+
+			<div class="col">
+				<label for="paper_type">Paper</label>
+				<input class="form-control" type="text" id="paper_type" name="paper_type">
+			</div>
+
+
+		</div>
+
+	</form>
+</div>
+<!--CUTTING END-->
+
+<!--PUNCHING START-->
+<div id="punching_form" style="display: none;">
+	<hr>
+	<h2>Punching</h2>
+	<hr>
+	<form action="#" method="post">
+		<div class="form-row">
+
+			<div class="col">
+				<label for="paper_size">Size</label>
+				<input class="form-control" type="text" id="paper_size" name="paper_size">
+			</div>
+
+			<div class="col">
+				<label for="quantity">Quantity</label>
+				<input class="form-control" type="text" id="quantity" name="quantity">
+			</div>
+		</div>
+
+		<div class="form-row">
+			<div class="col">
+				<label for="print_vendor">Vendor</label>
+				<input class="form-control" type="text" id="print_vendor" name="print_vendor">
+			</div>
+
+			<div class="col">
+				<label for="imp">Imp</label>
+				<input class="form-control" type="text" id="imp" name="imp">
+			</div>
+
+
+		</div>
+
+	</form>
+</div>
+<!--PUNCHING END-->
+
+<!--PASTING START-->
+<div id="pasting_form" style="display: none;">
+	<hr>
+	<h2>Pasting</h2>
+	<hr>
+	<form action="#" method="post">
+		<div class="form-row">
+
+			<div class="col">
+				<label for="paper_size">Size</label>
+				<input class="form-control" type="text" id="paper_size" name="paper_size">
+			</div>
+
+			<div class="col">
+				<label for="No_pasting">No. of Pasting</label>
+				<input class="form-control" type="text" id="No_pasting" name="No_pasting">
+			</div>
+		</div>
+
+		<div class="form-row">
+			<div class="col">
+				<label for="print_vendor">Vendor</label>
+				<input class="form-control" type="text" id="print_vendor" name="print_vendor">
+			</div>
+
+			<div class="col">
+				<label for="quantity">Quantity</label>
+				<input class="form-control" type="text" id="quantity" name="quantity">
+			</div>
+
+
+		</div>
+	</form>
+</div>
+<!--PASTING END-->
+
+<!--FOLDING START-->
+<div id="folding_form" style="display: none;">
+	<hr>
+	<h2>Folding</h2>
+	<hr>
+	<form action="#" method="post">
+		<div class="form-row">
+
+			<div class="col">
+				<label for="paper_size">Size</label>
+				<input class="form-control" type="text" id="paper_size" name="paper_size">
+			</div>
+
+			<div class="col">
+				<label for="quantity">Quantity</label>
+				<input class="form-control" type="text" id="quantity" name="quantity">
+			</div>
+		</div>
+
+		<div class="form-row">
+			<div class="col">
+				<label for="print_vendor">Vendor</label>
+				<input class="form-control" type="text" id="print_vendor" name="print_vendor">
+			</div>
+
+			<div class="col">
+				<label for="imp">Imp</label>
+				<input class="form-control" type="text" id="imp" name="imp">
+			</div>
+		</div>
+	</form>
+</div>
+<!--FOLDING END-->
+
+<!--CREASING START-->
+<div id="creasing_form" style="display: none;">
+	<hr>
+	<h2>Creasing</h2>
+	<hr>
+	<form action="#" method="post">
+		<div class="form-row">
+
+			<div class="col">
+				<label for="paper_size">Size</label>
+				<input class="form-control" type="text" id="paper_size" name="paper_size">
+			</div>
+
+			<div class="col">
+				<label for="quantity">Quantity</label>
+				<input class="form-control" type="text" id="quantity" name="quantity">
+			</div>
+		</div>
+
+		<div class="form-row">
+			<div class="col">
+				<label for="print_vendor">Vendor</label>
+				<input class="form-control" type="text" id="print_vendor" name="print_vendor">
+			</div>
+
+			<div class="col">
+				<label for="imp">Imp</label>
+				<input class="form-control" type="text" id="imp" name="imp">
+			</div>
+
+
+		</div>
+
+	</form>
+</div>
+<!--CREASING END-->
+
+
+
+<!--POSITIVE START-->
+<div id="positive_form" style="display: none;">
+	<hr>
+	<h2>Positive</h2>
+	<hr>
+	<form action="#" method="post">
+		<div class="form-row">
+
+			<div class="col">
+				<label for="sel1">Type</label>
+				<div class="form-group">
+					<select class="form-control" id="sel1">
+						<option>--Select Type--</option>
+						<option>PVC</option>
+						<option>BOPP</option>
+						<option>Matt</option>
+						<option>Thermal</option>
+						<option>Custom</option>
+					</select>
+				</div>
+			</div>
+
+			<div class="col">
+				<label for="paper_size">Size</label>
+				<input class="form-control" type="text" id="paper_size" name="paper_size">
+			</div>
+		</div>
+
+		<div class="form-row">
+			<div class="col">
+				<label for="print_vendor">Vendor</label>
+				<input class="form-control" type="text" id="print_vendor" name="print_vendor">
+			</div>
+
+			<div class="col">
+				<label for="number_of_sheets">Number of sheets</label>
+				<input class="form-control" type="text" id="number_of_sheets">
+			</div>
+		</div>
+	</form>
+</div>
+<!--POSITIVE END-->
+<!--UV START-->
+<div id="uv_form" style="display: none;">
+	<hr>
+	<h2>UV</h2>
+	<hr>
+	<form action="#" method="post">
+		<div class="form-row">
+			<div class="col">
+				<label for="sel1">Type</label>
+				<div class="form-group">
+					<select class="form-control" id="sel1">
+						<option>--Select Type--</option>
+						<option>PVC</option>
+						<option>BOPP</option>
+						<option>Matt</option>
+						<option>Thermal</option>
+						<option>Custom</option>
+					</select>
+				</div>
+			</div>
+			<div class="col">
+				<label for="paper_size">Size</label>
+				<input class="form-control" type="text" id="paper_size" name="paper_size">
+			</div>
+		</div>
+		<div class="form-row">
+			<div class="col">
+				<label for="print_vendor">Vendor</label>
+				<input class="form-control" type="text" id="print_vendor" name="print_vendor">
+			</div>
+			<div class="col">
+				<label for="number_of_sheets">Number of sheets</label>
+				<input class="form-control" type="text" id="number_of_sheets">
+			</div>
+		</div>
+	</form>
+</div>
+<!--UV END-->
+<!--4COL START-->
+<div id="fourcol_form" style="display: none;">
+	<hr>
+	<h2>4Col</h2>
+	<hr>
+	<form action="#" method="post">
+		<div class="form-row">
+		 <div class="col">
+			<label for="sel1">Type</label>
+			<div class="form-group">
+				<select class="form-control" id="sel1">
+					<option>--Select Type--</option>
+					<option>V Cards</option>
+					<option>L Heads</option>
+					<option>Env</option>
+					<option>Pamp</option>
+				</select>
+			</div>
+		</div>
+
+
+		<div class="col">
+			<label for="sel1">Type</label>
+			<div class="form-group">
+				<select class="form-control" id="sel1">
+					<option>--Select Type--</option>
+					<option>Size</option>
+					<option>Single/front back</option>
+				</select>
+			</div>
+		</div>
+		<div class="col">
+			<label for="print_vendor">Vendor</label>
+			<input class="form-control" type="text" id="print_vendor" name="print_vendor">
+		</div>
+
+</div>
+</form>
+</div>
+<div>
+ <button type="button" class="btn btn-info btn-block">Submit Purchase Order Details</button>
+</div>
+
+<!--FORM FOR SPECIFIC DETAILS END HERE-->
+{% endblock %}
+
+{% block extrascripts %}
+<script type="text/javascript">
+	$(document).ready(function() {
+		$('#paper_details_checkbox').change(function() {
+			$('#paper_details_form').fadeToggle();
+		});
+	});
+
+</script>
+
+<script type="text/javascript">
+	$(document).ready(function() {
+		$('#packaging_details_checkbox').change(function() {
+			$('#packaging_details_form').fadeToggle();
+		});
+	});
+
+</script>
+
+<script type="text/javascript">
+	$(document).ready(function() {
+		$('#binding_checkbox').change(function() {
+			$('#binding_form').fadeToggle();
+		});
+	});
+
+</script>
+
+<script type="text/javascript">
+	$(document).ready(function() {
+		$('#ctp_checkbox').change(function() {
+			$('#ctp_form').fadeToggle();
+		});
+	});
+
+</script>
+
+<script type="text/javascript">
+	$(document).ready(function() {
+		$('#sp_checkbox').change(function() {
+			$('#sp_form').fadeToggle();
+		});
+	});
+
+</script>
+
+<script type="text/javascript">
+	$(document).ready(function() {
+		$('#raise_checkbox').change(function() {
+			$('#raise_form').fadeToggle();
+		});
+	});
+
+</script>
+
+<script type="text/javascript">
+	$(document).ready(function() {
+		$('#vanish_checkbox').change(function() {
+			$('#vanish_form').fadeToggle();
+		});
+	});
+
+</script>
+
+<script type="text/javascript">
+	$(document).ready(function() {
+		$('#lamination_checkbox').change(function() {
+			$('#lamination_form').fadeToggle();
+		});
+	});
+
+</script>
+
+<script type="text/javascript">
+	$(document).ready(function() {
+		$('#punch_checkbox').change(function() {
+			$('#punch_form').fadeToggle();
+		});
+	});
+
+</script>
+
+<script type="text/javascript">
+	$(document).ready(function() {
+		$('#cutting_checkbox').change(function() {
+			$('#cutting_form').fadeToggle();
+		});
+	});
+
+</script>
+
+<script type="text/javascript">
+	$(document).ready(function() {
+		$('#punching_checkbox').change(function() {
+			$('#punching_form').fadeToggle();
+		});
+	});
+
+</script>
+
+<script type="text/javascript">
+	$(document).ready(function() {
+		$('#pasting_checkbox').change(function() {
+			$('#pasting_form').fadeToggle();
+		});
+	});
+
+</script>
+
+<script type="text/javascript">
+	$(document).ready(function() {
+		$('#folding_checkbox').change(function() {
+			$('#folding_form').fadeToggle();
+		});
+	});
+
+</script>
+
+<script type="text/javascript">
+	$(document).ready(function() {
+		$('#creasing_checkbox').change(function() {
+			$('#creasing_form').fadeToggle();
+		});
+	});
+
+</script>
+
+<script type="text/javascript">
+	$(document).ready(function() {
+		$('#positive_checkbox').change(function() {
+			$('#positive_form').fadeToggle();
+		});
+	});
+
+</script>
+
+<script type="text/javascript">
+	$(document).ready(function() {
+		$('#uv_checkbox').change(function() {
+			$('#uv_form').fadeToggle();
+		});
+	});
+
+</script>
+
+<script type="text/javascript">
+	$(document).ready(function() {
+		$('#fourcol_checkbox').change(function() {
+			$('#fourcol_form').fadeToggle();
+		});
+	});
+
+</script>
+{% endblock extrascripts %}

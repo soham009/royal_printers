@@ -1,0 +1,81 @@
+{% extends 'purchase_order_management/base.html' %}
+
+{% load staticfiles %}
+
+{% block stylesheets %}
+<link rel="stylesheet" href="//cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css">
+{% endblock %}
+
+{% block scripts %}
+    <script src="//cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
+
+    <script src="{% static 'js/jquery.bootstrap.modal.forms.js' %}"></script>
+{% endblock %}
+
+{% block content %}
+
+    <div class="modal fade" tabindex="-1" role="dialog" id="modal">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content"></div>
+        </div>
+    </div>
+
+    <hr>
+
+    <table id="userList" class="display" >
+		<thead>
+			<tr>
+				<th class="text-center" scope="col">#</th>
+				<th class="text-center" scope="col">User Name</th>
+                <th class="text-center" scope="col">Role</th>
+				<th class="text-center" scope="col">Last Login</th>
+                <th class="text-center" scope="col">Update</th>
+			</tr>
+		</thead>
+		<tbody>
+			{% for user in users %}
+			<tr>
+				<th class="text-center" scope="row">{{ forloop.counter }}</th>
+                <td class="text-center">{{ user.username }}</td>
+                <td class="text-center">
+                    {% if user.user_role == 1 %}
+                        Super Admin
+                    {% else %}
+                        Admin
+                    {% endif %}
+                </td>
+				<td class="text-center">{{ user.last_login }}</td>
+                <td>
+                    <center>
+                        <button type="button" class="update-user-list btn btn-sm btn-primary" data-id="{% url 'purchase_order_management:update_user_list' user.pk %}">
+                            <span class="fa fa-pencil"></span>
+                        </button>
+                    </center>
+                </td>
+			</tr>
+			{% endfor %}
+		</tbody>
+	</table>
+
+{% endblock %}
+
+{% block extrascripts %}
+
+    <script>
+        $(document).ready( function () {
+            $('#userList').DataTable();
+        } );
+    </script>
+
+    <script type="text/javascript">
+        $(function () {
+            // Update user list
+            $(".update-user-list").each(function () {
+                $(this).modalForm({formURL: $(this).data('id')});
+            });
+
+        });
+    </script>  
+
+</script>    
+{% endblock%}

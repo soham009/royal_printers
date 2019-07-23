@@ -52,7 +52,7 @@
 
 			<ul class="list-unstyled components">
 				<li>
-					<a href="#">Add a new Job/Purchase Order</a>
+					<a href="{% url 'purchase_order_management:purchase_order_form' %}">Add a new Job/Purchase Order</a>
 				</li>
 				<li>
 					<a href="#">Generate Bill</a>
@@ -64,22 +64,27 @@
 							<a href={% url 'purchase_order_management:purchase_order_list' %}>Purchase Order Search</a>
 						</li>
 						<li>
-							<a href="client_table_search.html">Client Search</a>
+							<a href={% url 'purchase_order_management:client_list' %}>Client Search</a>
 						</li>
 						<li>
-							<a href="outsource_table_search.html">Outsource Search</a>
+							<a href={% url 'purchase_order_management:vendor_list' %}>Vendor Search</a>
 						</li>
 					</ul>
 				</li>
+				{% if user_role == 1 %}
+				<li>
+					<a href={% url 'purchase_order_management:user_list' %}>Users List</a>
+				</li>
+				{% endif %}
 			</ul>
 			<ul class="list-unstyled CTAs">
 				<li>
-					<a href="login_form.html" class="btn btn-light">
+					<a href={% url 'purchase_order_management:sign_out'%} class="btn btn-light">
 						<font color="#7386D5">Logout</font>
 					</a>
 				</li>
 				<li>
-					<a href="report_error.html" class="article">Report Error</a>
+					<a href={% url 'purchase_order_management:report_errors' %} class="article">Report Error</a>
 				</li>
 			</ul>
 		</nav>
@@ -94,6 +99,8 @@
 			</div>
 		</div>
 
+		{% block extrascripts %}
+		{% endblock extrascripts %}
 		<script type="text/javascript">
 			$(document).ready(function() {
 				$("#sidebar").mCustomScrollbar({
@@ -108,9 +115,6 @@
 			});
 
 		</script>
-
-		{% block extrascripts %}
-		{% endblock extrascripts %}
 
 </body>
 

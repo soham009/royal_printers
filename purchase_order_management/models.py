@@ -25,6 +25,15 @@ class Vendor(models.Model):
     def __str__(self):
         return str(self.pk)
 
+class Client(models.Model):
+
+    client_name = models.CharField(max_length=200)
+    client_total_amount = models.FloatField()
+    client_amount_due = models.FloatField()
+
+    def __str__(self):
+        return str(self.pk)
+
 class Process(models.Model):
 
     # Datafields
@@ -33,7 +42,7 @@ class Process(models.Model):
     process_updated_on = models.DateTimeField(auto_now=True)
     process_size = models.CharField(max_length=100)
     process_amount = models.FloatField()
-    
+
     # Relationship of process with vendor
     process_vendor_id = models.ForeignKey(Vendor, on_delete = models.CASCADE)
 
@@ -368,7 +377,6 @@ class SpecialProcess(Process):
 
 class PurchaseOrder(models.Model):
     # DataFields
-    purchase_order_client_name = models.CharField(max_length=200)
     purchase_order_item = models.CharField(max_length=200)
     purchase_order_item_quantity = models.IntegerField()
     purchase_order_size = models.CharField(max_length=200)
@@ -376,12 +384,14 @@ class PurchaseOrder(models.Model):
     purchase_order_date_created_on = models.DateTimeField(auto_now_add=True)
     purchase_order_date_updated_on = models.DateTimeField(auto_now=True)
 
-    # Relation with the user and the processes.
+    # Relation with the user,client  and the processes.
     purchase_order_user_id = models.ForeignKey(CustomUser, on_delete = models.CASCADE)
+    purchase_order_client_id = models.ForeignKey(Client, on_delete= models.CASCADE)
     purchase_order_process_relation = models.ManyToManyField(Process)
+    
 
     def __str__(self):
-        return str(self.pk)+" "+str(self.purchase_order_client_name)
+        return str(self.pk)+" "+str(self.purchase_order_client_id)
     
 
 

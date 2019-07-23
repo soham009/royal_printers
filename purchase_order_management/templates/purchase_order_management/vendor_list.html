@@ -1,0 +1,75 @@
+{% extends 'purchase_order_management/base.html' %}
+
+{% load staticfiles %}
+
+{% block stylesheets %}
+<link rel="stylesheet" href="//cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css">
+{% endblock %}
+
+{% block scripts %}
+    <script src="//cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
+
+    <script src="{% static 'js/jquery.bootstrap.modal.forms.js' %}"></script>
+{% endblock %}
+
+{% block content %}
+
+    <div class="modal fade" tabindex="-1" role="dialog" id="modal">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content"></div>
+        </div>
+    </div>
+
+    <hr>
+
+    <table id="vendorList">
+        <thead>
+            <tr>
+                <th>Vendor Name</th>
+                <th>Vendor Address</th>
+                <th>Vendor Total Amount</th>
+                <th>Vendor Amount Due</th>
+                <th>Update</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for vendor in vendors %}
+                <tr>
+                    <td>{{vendor.vendor_name}}</td>
+                    <td>{{vendor.vendor_address}}</td>
+                    <td>{{vendor.vendor_total_amount}}</td>
+                    <td>{{vendor.vendor_amount_due}}</td>
+                    <td>
+                        <center>
+                            <button type="button" class="update-vendor-list btn btn-sm btn-primary" data-id="{% url 'purchase_order_management:update_vendor_list' vendor.pk %}">
+                                <span class="fa fa-pencil">Update</span>
+                            </button>
+                        </center>
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+        <tfoot>
+        </tfoot>
+    </table>
+
+{% endblock %}
+
+{% block extrascripts %}
+
+    <script>
+        $(document).ready( function () {
+            $('#vendorList').DataTable();
+        } );
+    </script>
+
+    <script type="text/javascript">
+        $(function () {
+            // Update vendor List
+            $(".update-vendor-list").each(function () {
+                $(this).modalForm({formURL: $(this).data('id')});
+            });
+
+        });
+</script>    
+{% endblock%}

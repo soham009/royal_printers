@@ -1,0 +1,35 @@
+{% extends 'purchase_order_management/base.html' %}
+
+{% block content %}
+<br>
+<br>
+<h1>Report Error</h1>
+
+<hr>
+
+<!--GENERAL DETAILS FORM STARTS-->
+<!--TEXT FIELDS START HERE-->
+<form action="#" method="post">
+
+	<div class="col">
+		<label for="job_name">Subject</label>
+		<input type="text" class="form-control" id="job_name" name="job_name">
+	</div>
+
+	<br>
+	<div class="col">
+		<form>
+			<div class="form-group">
+				<label for="message">Message:</label>
+				<textarea class="form-control" rows="5" id="message"></textarea>
+			</div>
+
+			<br>
+			<button type="submit" class="btn btn-primary id = btn">Submit</button>
+
+		</form>
+	</div>
+
+
+</form>
+{% endblock %}

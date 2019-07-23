@@ -1,0 +1,29 @@
+{% extends 'purchase_order_management/base.html' %}
+
+
+	{% block stylesheets %}
+    <style>
+ .error-template {
+            padding: 40px 15px;text-align: center;
+            }
+        .error-actions {
+            margin-top:15px;margin-bottom:15px;
+            }
+        .error-actions .btn { 
+            margin-right:10px; 
+            }
+</style>
+{% endblock stylesheets %}
+{% block content %}
+ <br>    
+                            <center><h1>Oops!</h1></center>  
+                            <center><h2>Page Not Found</h2></center>
+                            <div class="error-details">
+                                <center>An error has occured, Requested page not found!
+                                please try again later</center>
+                            </div>
+                            <div class="error-actions">
+                    <a href="http://www.jquery2dotnet.com" class="btn btn-info btn-md"><span class="glyphicon glyphicon-home"></span>
+                        Goto Homepage </a><a href="http://www.jquery2dotnet.com" class="btn btn-default btn-md"><span class="glyphicon glyphicon-envelope"></span> SIGN IN </a>
+                </div>
+{% endblock %}

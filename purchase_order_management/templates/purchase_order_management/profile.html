@@ -1,0 +1,25 @@
+{% extends 'purchase_order_management/base.html' %}
+
+{% block content %}
+<br>
+<br>
+<div class="card text-center">
+  <div class="card-header">
+    My Details
+  </div>
+  <div class="card-body">
+    <h5 class="card-title">Username : {{username}}</h5>
+	<h5 class="card-title">Role :
+	{% if user_role == 1 %}
+	Super Admin
+	{% else %}
+	Admin
+	{% endif %}
+	</h5>
+    <a href="#" class="btn btn-danger">Request Password Change</a>
+  </div>
+  <div class="card-footer text-muted">
+    Last Login : {{login}} <br> Date Joined : {{date_join}}
+  </div>
+</div>
+{% endblock %}

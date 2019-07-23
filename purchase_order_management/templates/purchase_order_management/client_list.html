@@ -22,43 +22,25 @@
 
     <hr>
 
-    <table id="purchaseOrderList">
+    <table id="clientList">
         <thead>
             <tr>
-                <th>Purchase Order ID</th>
-                <th>Purchase Order Date</th>
-                <th>Purchase Order Client Name</th>
-                <th>Purchase Order Item</th>
-                <th>Purchase Order Item Quantity</th>
-                <th>Process List</th>
-                <th>Summary</th>
-                <th>Delete</th>
+                <th>Client Name</th>
+                <th>Client Total Amount</th>
+                <th>Client Amount Due</th>
+                <th>Update</th>
             </tr>
         </thead>
         <tbody>
-            {% for purchase_order,process_list in purchase_orders %}
+            {% for client in clients %}
                 <tr>
-                    <td>{{purchase_order.pk}}</td>
-                    <td>{{purchase_order.purchase_order_date_created_on}}</td>
-                    <td>{{purchase_order.purchase_order_client_name}}</td>
-                    <td>{{purchase_order.purchase_order_item}}</td>
-                    <td>{{purchase_order.purchase_order_item_quantity}}</td>
-                    <td>
-                        {% for process in process_list %}
-                            {{process.process_name}},
-                        {% endfor %}
-                    </td>
+                    <td>{{client.client_name}}</td>
+                    <td>{{client.client_total_amount}}</td>
+                    <td>{{client.client_amount_due}}</td>
                     <td>
                         <center>
-                            <button type="button" class="btn btn-sm btn-primary">
-                                Summary
-                            </button>
-                        </center>
-                    </td>
-                    <td>
-                        <center>
-                            <button type="button" class="delete-purchase btn btn-sm btn-danger" data-id="{% url 'purchase_order_management:delete_purchase_order_list' purchase_order.pk %}">
-                                <span class="fa fa-trash"></span>
+                            <button type="button" class="update-client-list btn btn-sm btn-primary" data-id="{% url 'purchase_order_management:update_client_list' client.pk %}">
+                                <span class="fa fa-pencil">Update</span>
                             </button>
                         </center>
                     </td>
@@ -75,14 +57,14 @@
 
     <script>
         $(document).ready( function () {
-            $('#purchaseOrderList').DataTable();
+            $('#clientList').DataTable();
         } );
     </script>
 
     <script type="text/javascript">
         $(function () {
-            // Delete book buttons
-            $(".delete-purchase").each(function () {
+            // Update Client List
+            $(".update-client-list").each(function () {
                 $(this).modalForm({formURL: $(this).data('id')});
             });
 
