@@ -36,7 +36,7 @@
         <tbody>
             {% for vendor in vendors %}
                 <tr>
-                    <td>{{vendor.vendor_name}}</td>
+                    <td><a href={% url 'purchase_order_management:vendor_list_detail' vendor.pk %}>{{vendor.vendor_name}}</a></td>
                     <td>{{vendor.vendor_address}}</td>
                     <td>{{vendors_total_amount|get_item:vendor.pk}}</td>
                     <td>{{vendors_total_amount_due|get_item:vendor.pk}}</td>

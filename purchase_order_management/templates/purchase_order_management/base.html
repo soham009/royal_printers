@@ -55,14 +55,11 @@
 					<a href="{% url 'purchase_order_management:purchase_order_form' %}">Add a new Job/Purchase Order</a>
 				</li>
 				<li>
-					<a href="#">Generate Bill</a>
-				</li>
+							<a href={% url 'purchase_order_management:purchase_order_list' %}>Purchase Orders		</a>
+						</li>
 				<li class="active">
 					<a href="#homeSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Search</a>
 					<ul class="collapse list-unstyled" id="homeSubmenu">
-						<li>
-							<a href={% url 'purchase_order_management:purchase_order_list' %}>Purchase Order Search</a>
-						</li>
 						<li>
 							<a href={% url 'purchase_order_management:client_list' %}>Client Search</a>
 						</li>

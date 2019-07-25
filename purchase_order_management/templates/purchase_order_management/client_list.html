@@ -35,7 +35,7 @@
         <tbody>
             {% for client in clients %}
                 <tr>
-                    <td>{{client.client_name}}</td>
+                    <td><a href={% url 'purchase_order_management:client_list_detail' client.pk %}>{{client.client_name}}</a></td>
                     <td>{{clients_total_amount|get_item:client.pk}}</td>
                     <td>{{clients_total_amount_due|get_item:client.pk}}</td>
                 </tr>

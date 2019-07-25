@@ -1,0 +1,98 @@
+{% extends 'purchase_order_management/base.html' %}
+
+{% load staticfiles %}
+
+{% block stylesheets %}
+<link rel="stylesheet" href="//cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css">
+{% endblock %}
+
+{% block scripts %}
+    <script src="//cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
+
+    <script src="{% static 'js/jquery.bootstrap.modal.forms.js' %}"></script>
+{% endblock %}
+
+{% block content %}
+
+    <div class="modal fade" tabindex="-1" role="dialog" id="modal">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content"></div>
+        </div>
+    </div>
+
+    <hr>
+
+    <table id="processList">
+        <thead>
+            <tr>
+                <th>Process Id</th>
+                <th>Process Name</th>
+                <th>Process Created On</th>
+                <th>Process Updated On</th>
+                <th>Process Size</th>
+                <th>Process Amount</th>
+                <th>Process Amount Due</th>
+                <th>Vendor ID</th>
+                <th>Purchase Order ID</th>
+                <th>Delete</th>
+                <th>Update</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for process in processes %}
+                <tr>
+                    <td>{{process.pk}}</td>
+                    <td>{{process.process_name}}</td>
+                    <td>{{process.process_created_on}}</td>
+                    <td>{{process.process_updated_on}}</td>
+                    <td>{{process.process_size}}</td>
+                    <td>{{process.process_amount}}</td>
+                    <td>{{process.process_amount_due}}</td>
+                    <td>{{process.process_vendor_id}}</td>
+                    <td>{{process.process_purchase_order_id}}</td>
+                    <td>
+                        <center>
+                            <button type="button" class="delete-process-list btn btn-sm btn-danger" data-id="{% url 'purchase_order_management:delete_process_list_purchase_order_detail' process.pk %}">
+                                <span class="fa fa-trash"></span>
+                            </button>
+                        </center>
+                    </td>
+                    <td>
+                        <center>
+                            <button type="button" class="update-process-list btn btn-sm btn-primary" data-id="{% url 'purchase_order_management:update_process_list_purchase_order_detail' process.pk %}">
+                                <span class="fa fa-pencil">Update</span>
+                            </button>
+                        </center>
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+        <tfoot>
+        </tfoot>
+    </table>
+
+{% endblock %}
+
+{% block extrascripts %}
+
+    <script>
+        $(document).ready( function () {
+            $('#processList').DataTable();
+        } );
+    </script>
+
+    <script type="text/javascript">
+        $(function () {
+            
+            $(".delete-process-list").each(function () {
+                $(this).modalForm({formURL: $(this).data('id')});
+            });
+
+            $(".update-process-list").each(function () {
+                $(this).modalForm({formURL: $(this).data('id')});
+            });
+
+        });
+    </script>
+    
+{% endblock%}

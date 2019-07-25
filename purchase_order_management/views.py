@@ -45,6 +45,28 @@ class ProcessUpdateView(BSModalUpdateView):
     success_message = 'Success: Process was updated.'
     success_url = reverse_lazy('purchase_order_management:process_list')
 
+
+class PurchaseOrderProcessDetailDeleteView(BSModalDeleteView):
+    model = Process
+    template_name = 'purchase_order_management/process_list_delete.html'
+    success_message = 'Success: Process was deleted.'
+
+    def get_success_url(self,**kwargs):
+        process = Process.objects.get(pk=self.kwargs['pk'])
+        purchase_order_id = process.process_purchase_order_id
+        return reverse_lazy('purchase_order_management:purchase_order_list_detail', kwargs={'pk': purchase_order_id })
+
+class PurchaseOrderProcessDetailUpdateView(BSModalUpdateView):
+    model = Process
+    form_class = ProcessForm
+    template_name = 'purchase_order_management/process_list_update.html'
+    success_message = 'Success: Process was updated.'
+
+    def get_success_url(self,**kwargs):
+        process = Process.objects.get(pk=self.kwargs['pk'])
+        purchase_order_id = process.process_purchase_order_id
+        return reverse_lazy('purchase_order_management:purchase_order_list_detail', kwargs={'pk': purchase_order_id })
+
 class ClientCreateView(BSModalCreateView):
     template_name = 'purchase_order_management/client_list_create.html'
     form_class = ClientForm
@@ -56,6 +78,51 @@ class VendorCreateView(BSModalCreateView):
     form_class = VendorForm
     success_message = 'Success: Vendor was created.'
     success_url = reverse_lazy('purchase_order_management:vendor_list')
+
+
+
+class VendorProcessDetailDeleteView(BSModalDeleteView):
+    model = Process
+    template_name = 'purchase_order_management/process_list_delete.html'
+    success_message = 'Success: Process was deleted.'
+
+    def get_success_url(self,**kwargs):
+        process = Process.objects.get(pk=self.kwargs['pk'])
+        vendor_id = process.process_vendor_id
+        return reverse_lazy('purchase_order_management:vendor_list_detail', kwargs={'pk': vendor_id })
+
+class VendorProcessDetailUpdateView(BSModalUpdateView):
+    model = Process
+    form_class = ProcessForm
+    template_name = 'purchase_order_management/process_list_update.html'
+    success_message = 'Success: Process was updated.'
+
+    def get_success_url(self,**kwargs):
+        process = Process.objects.get(pk=self.kwargs['pk'])
+        vendor_id = process.process_vendor_id
+        return reverse_lazy('purchase_order_management:vendor_list_detail', kwargs={'pk': vendor_id })
+
+
+class ClientPurchaseOrderDetailDeleteView(BSModalDeleteView):
+    model = PurchaseOrder
+    template_name = 'purchase_order_management/purchase_order_list_delete.html'
+    success_message = 'Success: Purchase order was deleted.'
+
+    def get_success_url(self,**kwargs):
+        purchase_order = PurchaseOrder.objects.get(pk=self.kwargs['pk'])
+        client_id = purchase_order.purchase_order_client_id
+        return reverse_lazy('purchase_order_management:client_list_detail', kwargs={'pk': client_id })
+
+class ClientPurchaseOrderDetailUpdateView(BSModalUpdateView):
+    model = PurchaseOrder
+    form_class = PurchaseOrderForm
+    template_name = 'purchase_order_management/purchase_order_list_update.html'
+    success_message = 'Success: Purchase Order was updated.'
+
+    def get_success_url(self,**kwargs):
+        purchase_order = PurchaseOrder.objects.get(pk=self.kwargs['pk'])
+        client_id = purchase_order.purchase_order_client_id
+        return reverse_lazy('purchase_order_management:client_list_detail', kwargs={'pk': client_id })
 
 
 def purchase_list(request):
@@ -80,6 +147,19 @@ def purchase_list(request):
         'user_role': user_role
      }
     return render(request, 'purchase_order_management/purchase_order_list.html', data )
+
+def purchase_order_list_details(request, pk):
+    user_role = request.user.user_role
+    purchase_order = PurchaseOrder.objects.get(pk=pk)
+    processes = purchase_order.process_set.all()
+
+    data = { 
+        'processes':processes,
+        'user_role': user_role
+    }
+    return render(request,'purchase_order_management/purchase_order_detail_view.html',data)
+
+
 
 def process_list(request):
     """Generates the list of all the processes.
@@ -123,6 +203,24 @@ def client_list(request):
      }
     return render(request, 'purchase_order_management/client_list.html', data )
 
+def client_list_details(request, pk):
+    user_role = request.user.user_role
+    client = Client.objects.get(pk=pk)
+    purchase_orders = client.purchaseorder_set.all()
+
+    process_list = []
+    for purchase_order in purchase_orders:
+        # Getting all the processes in a purchase order.
+        # and appending it to the above process_list.
+        process_list.append(purchase_order.process_set.all())
+
+
+    data = { 
+        'purchase_orders': zip(purchase_orders,process_list),
+        'user_role': user_role
+    }
+    return render(request,'purchase_order_management/client_detail_view.html',data)
+
 def vendor_list(request):
     """Generates the list of all the vendors.
     Parameters: HttpRequest object
@@ -147,6 +245,18 @@ def vendor_list(request):
         'user_role': user_role
      }
     return render(request, 'purchase_order_management/vendor_list.html', data )
+
+def vendor_list_details(request, pk):
+    user_role = request.user.user_role
+    vendor = Vendor.objects.get(pk=pk)
+    processes = vendor.process_set.all()
+
+    data = { 
+        'processes':processes,
+        'user_role': user_role
+    }
+    return render(request,'purchase_order_management/vendor_detail_view.html',data)
+
 
 def home(request):
     data = { }

@@ -41,7 +41,7 @@
         <tbody>
             {% for purchase_order,process_list in purchase_orders %}
                 <tr>
-                    <td><a href={% url 'purchase_order_management:purchase_order_list_detail' purchase_order.pk %}>{{purchase_order.pk}}</a></td>
+                    <td>{{purchase_order.pk}}</td>
                     <td>{{purchase_order.purchase_order_created_on}}</td>
                     <td>{{purchase_order.purchase_order_client_id.client_name}}</td>
                     <td>{{purchase_order.purchase_order_item}}</td>
@@ -62,14 +62,14 @@
                     </td>
                     <td>
                         <center>
-                            <button type="button" class="delete-purchase-order-list btn btn-sm btn-danger" data-id="{% url 'purchase_order_management:delete_purchase_order_list' purchase_order.pk %}">
+                            <button type="button" class="delete-purchase-order-list btn btn-sm btn-danger" data-id="{% url 'purchase_order_management:delete_purchase_order_list_client_detail' purchase_order.pk %}">
                                 <span class="fa fa-trash"></span>
                             </button>
                         </center>
                     </td>
                     <td>
                         <center>
-                            <button type="button" class="update-purchase-order-list btn btn-sm btn-primary" data-id="{% url 'purchase_order_management:update_purchase_order_list' purchase_order.pk %}">
+                            <button type="button" class="update-purchase-order-list btn btn-sm btn-primary" data-id="{% url 'purchase_order_management:update_purchase_order_list_client_detail' purchase_order.pk %}">
                                 <span class="fa fa-pencil">Update</span>
                             </button>
                         </center>

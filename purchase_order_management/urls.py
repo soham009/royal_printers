@@ -30,28 +30,54 @@ urlpatterns = [
     # url for purchase order list update modal
     path('update_purchase_order_list/<int:pk>/', views.PurchaseOrderUpdateView.as_view(), name='update_purchase_order_list'),
 
+    
+    # url for purchase order detail view
+    path('purchase_order_list/detail/<int:pk>', views.purchase_order_list_details, name ='purchase_order_list_detail'),
+
     # url for client list
     path('client_list/', views.client_list, name ='client_list'),
     
     # url for client list create modal
     path('create_client_list/', views.ClientCreateView.as_view(), name ='create_client_list'),
 
+    # url for client detail view
+    path('client_list/detail/<int:pk>', views.client_list_details, name ='client_list_detail'),
+
+
     # url for process list
     path('process_list/', views.process_list, name ='process_list'),
 
     
-    # url for purchase order list delete modal
+    # url for process list delete modal
     path('delete_process_list/<int:pk>/', views.ProcessDeleteView.as_view(), name='delete_process_list'),
 
-    # url for purchase order list update modal
+    # url for process list update modal
     path('update_process_list/<int:pk>/', views.ProcessUpdateView.as_view(), name='update_process_list'),
 
+    # url for purchase order list detail update modal
+    path('update_process_list_purchase_order_detail/<int:pk>/', views.PurchaseOrderProcessDetailUpdateView.as_view(), name='update_process_list_purchase_order_detail'),
+    # url for purchase order list detail delete modal
+    path('delete_process_list_purchase_order_detail/<int:pk>/', views.PurchaseOrderProcessDetailDeleteView.as_view(), name='delete_process_list_purchase_order_detail'),
+
+
+    # url for purchase order list detail update modal
+    path('update_process_list_vendor_detail/<int:pk>/', views.VendorProcessDetailUpdateView.as_view(), name='update_process_list_vendor_detail'),
+    # url for purchase order list detail delete modal
+    path('delete_process_list_vendor_detail/<int:pk>/', views.VendorProcessDetailDeleteView.as_view(), name='delete_process_list_vendor_detail'),
+
+    # url for client purchase order list detail update modal
+    path('update_purchase_order_list_client_detail/<int:pk>/', views.ClientPurchaseOrderDetailUpdateView.as_view(), name='update_purchase_order_list_client_detail'),
+    # url for client purchase order list detail delete modal
+    path('delete_purchase_order_list_client_detail/<int:pk>/', views.ClientPurchaseOrderDetailDeleteView.as_view(), name='delete_purchase_order_list_client_detail'),
     
     # url for vendor list
     path('vendor_list/', views.vendor_list, name ='vendor_list'),
 
     # url for vendor list create modal
     path('create_vendor_list/', views.VendorCreateView.as_view(), name ='create_vendor_list'),
+
+    # url for vendor detail view
+    path('vendor_list/detail/<int:pk>', views.vendor_list_details, name ='vendor_list_detail'),
 
     # url for submitting purchase order form
     path('purchase_order_form/submit/', views.purchase_order_form_submit, name='purchase_order_form_submit'),
