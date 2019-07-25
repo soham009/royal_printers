@@ -27,11 +27,11 @@ urlpatterns = [
     # url for purchase order list delete modal
     path('delete_purchase_order_list/<int:pk>/', views.PurchaseOrderDeleteView.as_view(), name='delete_purchase_order_list'),
 
+    # url for purchase order list update modal
+    path('update_purchase_order_list/<int:pk>/', views.PurchaseOrderUpdateView.as_view(), name='update_purchase_order_list'),
+
     # url for client list
     path('client_list/', views.client_list, name ='client_list'),
-
-    # url for client list update modal
-    path('update_client_list/<int:pk>/', views.ClientUpdateView.as_view(), name='update_client_list'),
 
     
     # url for vendor list
@@ -40,8 +40,12 @@ urlpatterns = [
     # url for vendor list update modal
     path('update_vendor_list/<int:pk>/', views.VendorUpdateView.as_view(), name='update_vendor_list'),
 
+    # url for submitting purchase order form
+    path('purchase_order_form/submit/', views.purchase_order_form_submit, name='purchase_order_form_submit'),
+
     path('error_404/', views.error_404, name ='error_404'),
     path('my_profile/', views.profile, name ='profile'),
     path('report_error/', views.report_error, name ='report_errors'),
+
 
 ]

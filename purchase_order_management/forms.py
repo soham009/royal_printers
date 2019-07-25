@@ -2,8 +2,11 @@ from .models import PurchaseOrder, Client, Vendor, CustomUser
 from bootstrap_modal_forms.forms import BSModalForm
 from django import forms
 
-class PurchaseForm(forms.Form):
-    pass
+class PurchaseOrderForm(BSModalForm):
+
+    class Meta:
+        model = PurchaseOrder
+        fields = ('purchase_order_amount','purchase_order_amount_due')
 
 class ClientForm(BSModalForm):
     

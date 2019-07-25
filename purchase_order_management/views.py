@@ -1,8 +1,8 @@
 from django.shortcuts import render, get_object_or_404, get_list_or_404, HttpResponseRedirect
-from .models import PurchaseOrder, Client, Vendor, CustomUser
+from .models import PurchaseOrder, Client, Vendor, CustomUser, Paper
 from bootstrap_modal_forms.generic import BSModalDeleteView, BSModalUpdateView
 from django.urls import reverse_lazy, reverse
-from .forms import ClientForm, VendorForm, CustomUserForm
+from .forms import ClientForm, VendorForm, CustomUserForm, PurchaseOrderForm
 from django.contrib.auth import login, logout, authenticate
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.hashers import make_password
@@ -24,12 +24,12 @@ class PurchaseOrderDeleteView(BSModalDeleteView):
     success_message = 'Success: Purchase order was deleted.'
     success_url = reverse_lazy('purchase_order_management:purchase_order_list')
 
-class ClientUpdateView(BSModalUpdateView):
-    model = Client
-    form_class = ClientForm
-    template_name = 'purchase_order_management/client_list_update.html'
-    success_message = 'Success: Client was updated.'
-    success_url = reverse_lazy('purchase_order_management:client_list')
+class PurchaseOrderUpdateView(BSModalUpdateView):
+    model = PurchaseOrder
+    form_class = PurchaseOrderForm
+    template_name = 'purchase_order_management/purchase_order_list_update.html'
+    success_message = 'Success: Purchase Order was updated.'
+    success_url = reverse_lazy('purchase_order_management:purchase_order_list')
 
 class VendorUpdateView(BSModalUpdateView):
     model = Vendor
@@ -69,8 +69,21 @@ def client_list(request):
     user_role = request.user.user_role
     # Get all the clients.
     clients = Client.objects.all()
+    clients_total_amount = {}
+    clients_total_amount_due = {}
+    for client in clients:
+        total_amount = 0
+        total_amount_due = 0
+        for purchase_order in client.purchaseorder_set.all():
+            total_amount += purchase_order.purchase_order_amount
+            total_amount_due += purchase_order.purchase_order_amount_due
+        clients_total_amount[client.pk]=total_amount
+        clients_total_amount_due[client.pk]=total_amount_due
+
     data = {
         'clients': clients,
+        'clients_total_amount': clients_total_amount,
+        'clients_total_amount_due': clients_total_amount_due,
         'user_role': user_role
      }
     return render(request, 'purchase_order_management/client_list.html', data )
@@ -94,7 +107,14 @@ def home(request):
 
 def purchase_order_form(request):
     user_role = request.user.user_role
-    data = { 'user_role': user_role}
+    vendors = Vendor.objects.all()
+    clients = Client.objects.all()
+
+    data = {
+        'user_role': user_role,
+        'vendors': vendors,
+        'clients': clients
+    }
     return render(request, 'purchase_order_management/purchase_order_form.html', data )
 
 
@@ -168,3 +188,72 @@ def report_error(request):
     user_role = request.user.user_role
     data = { 'user_role': user_role}
     return render(request, 'purchase_order_management/report_error.html', data )
+
+
+def purchase_order_form_submit(request):
+    """Creates a new purchase order
+        Parameters: request object.
+        Returns: Redirects to purchase order list if the purchase order is created successfully.
+    """
+    if request.method == "POST":
+        # Get all data relating to purchase order.
+        purchase_order_item = request.POST['purchase_order_item']
+        purchase_order_item_quantity = request.POST['purchase_order_item_quantity']
+        purchase_order_size = request.POST['purchase_order_size']
+        purchase_order_number_of_columns = request.POST['purchase_order_number_of_columns']
+        purchase_order_purchase_date = request.POST['purchase_order_purchase_date']
+        purchase_order_purchase_by = request.POST['purchase_order_purchase_by']
+        purchase_order_name = request.POST['purchase_order_name']
+        purchase_order_po_number = request.POST['purchase_order_po_number']
+        purchase_order_number = request.POST['purchase_order_number']
+        purchase_order_amount = request.POST['purchase_order_amount']
+
+        # Get the user object who creates the purchase order and the client object whose
+        # purchase order it is.
+        purchase_order_user_id = CustomUser.objects.get(pk=request.user.pk)
+        purchase_order_client_id = Client.objects.get(pk=request.POST['purchase_order_client'])
+
+        # Create the purchase order object.
+        purchase_order = PurchaseOrder.objects.create(purchase_order_item = purchase_order_item,
+                                                        purchase_order_item_quantity = purchase_order_item_quantity, 
+                                                        purchase_order_size = purchase_order_size, 
+                                                        purchase_order_number_of_columns = purchase_order_number_of_columns, 
+                                                        purchase_order_purchase_date = purchase_order_purchase_date, 
+                                                        purchase_order_purchase_by = purchase_order_purchase_by, 
+                                                        purchase_order_name = purchase_order_name, 
+                                                        purchase_order_po_number = purchase_order_po_number, 
+                                                        purchase_order_number = purchase_order_number, 
+                                                        purchase_order_amount = purchase_order_amount,
+                                                        purchase_order_amount_due = purchase_order_amount,
+                                                        purchase_order_user_id = purchase_order_user_id, 
+                                                       purchase_order_client_id = purchase_order_client_id)
+        # Check if paper process is present.
+        if request.POST.get('paper_checkbox', False) == 'paper':
+            # Get the paper process data.
+            paper_quantity = request.POST['paper_quantity']
+            paper_color = request.POST['paper_color']
+            paper_gsm = request.POST['paper_gsm']
+            paper_number_of_sheets = request.POST['paper_number_of_sheets']
+            paper_rate = request.POST['paper_rate']
+            
+            process_name = 'Paper'
+            process_size = request.POST['paper_size']
+
+            # Calculate the process amount.
+            process_amount = float(paper_rate)*int(paper_quantity)
+
+            # Get the vendor to which the process is assigned.
+            process_vendor_id = Vendor.objects.get(pk=request.POST['paper_vendor'])
+            
+            # Create the paper object.
+            paper = Paper.objects.create(process_name = process_name, process_size = process_size,
+                                    process_amount = process_amount, paper_quantity = paper_quantity,
+                                    paper_color = paper_color, paper_gsm = paper_gsm,
+                                     paper_number_of_sheets = paper_number_of_sheets,
+                                     paper_rate = paper_rate,process_vendor_id = process_vendor_id
+                                     )
+
+            # Add the paper object in the many to many relation with the above purchase order object.
+            purchase_order.purchase_order_process_relation.add(paper)
+    return HttpResponseRedirect(reverse('purchase_order_management:purchase_order_list'))
+

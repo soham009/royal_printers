@@ -9,66 +9,50 @@
 
 <!--GENERAL DETAILS FORM STARTS-->
 <!--TEXT FIELDS START HERE-->
-<form action={% url 'purchase_order_management:purchase_order_form_submit' %} method="post">
-	{% csrf_token %}
+<form action="#" method="post">
 	<div class="form-row">
 		<div class="col">
-			<label for="purchase_order_name">Purchase Order Name</label>
-			<input type="text" class="form-control" id="purchase_order_name" name="purchase_order_name" required>
+			<label for="job_name">Job Name</label>
+			<input type="text" class="form-control" id="job_name" name="job_name">
 		</div>
 		<div class="col">
-			<label for="purchase_order_number">Purchase Order Number</label>
-			<input type="number" step="1" class="form-control" id="purchase_order_number" name="purchase_order_number" required>
+			<label for="job_number">Job Number</label>
+			<input type="text" class="form-control" id="job_number" name="job_number">
 		</div>
 		<div class="col">
-			<label for="purchase_order_po_number">PO Number</label>
-			<input type="number" step="1" class="form-control" id="purchase_order_po_number" name="purchase_order_po_number" required>
+			<label for="po_number">PO Number</label>
+			<input type="text" class="form-control" id="po_number" name="po_number">
 		</div>
 	</div>
 
 	<div class="form-row">
 		<div class="col">
-			<label for="purchase_order_item">Items</label>
-			<input type="text" class="form-control" id="purchase_order_item" name="purchase_order_item" required>
+			<label for="items">Items</label>
+			<input type="text" class="form-control" id="items" name="items">
 		</div>
 		<div class="col">
-			<label for="purchase_order_item_quantity">Quantity</label>
-			<input type="number" step="1" class="form-control" id="purchase_order_item_quantity" name="purchase_order_item_quantity" required>
+			<label for="quantity">Quantity</label>
+			<input type="text" class="form-control" id="quantity" name="quantity">
 		</div>
 		<div class="col">
-			<label for="purchase_order_size">Size</label>
-			<input type="number" step="0.01" class="form-control" id="purchase_order_size" name="purchase_order_size" required>
+			<label for="size">Size</label>
+			<input type="text" class="form-control" id="size" name="size">
 		</div>
 		<div class="col">
-			<label for="purchase_order_number_of_columns">Number of Columns</label>
-			<input type="number" step="1" class="form-control" id="purchase_order_number_of_columns" name="purchase_order_number_of_columns" required>
+			<label for="number_of_columns">Number of Columns</label>
+			<input type="text" class="form-control" id="number_of_columns" name="number_of_columns">
 		</div>
 	</div>
 
 	<div class="form-row">
 		<div class="col">
-			<label for="purchase_order_purchase_date">Purchase Date</label>
-			<input type="date" class="form-control" id="purchase_order_purchase_date" name="purchase_order_purchase_date" required>
+			<label for="purchase_date">Purchase Date</label>
+			<input type="date" class="form-control" id="purchase_date" name="purchase_date">
 		</div>
 		<div class="col">
-			<label for="purchase_order_purchase_by">Purchase By</label>
-			<input type="date" class="form-control" id="purchase_order_purchase_by" name="purchase_order_purchase_by" required>
+			<label for="purchase_by">Purchase By</label>
+			<input type="date" class="form-control" id="purchase_by" name="purchase_by">
 		</div>
-
-		<div class="col">
-				<label for="purchase_order_client">Client</label>
-					<div class="form-group">
-						<select class="form-control" id="purchase_order_client" name="purchase_order_client">
-							{% for client in clients %}
-							<option value={{ client.pk }}>{{ client.client_name }}</option>
-							{% endfor %}
-						</select>
-					</div>
-		</div>
-		<div class="col">
-				<label for="purchase_order_amount">Amount</label>
-				<input type="number" step="0.01" class="form-control" id="purchase_order_amount" name="purchase_order_amount" required>
-			</div>
 	</div>
 	<!--TEXTFIELDS END HERE-->
 	<br>
@@ -81,13 +65,13 @@
 
 	<div class="form-row">
 		<div class="col">
-			<label for="paper_checkbox" class="checkbox-inline">Paper</label>
-			<input type="checkbox" value="paper" id="paper_checkbox" name="paper_checkbox">
+			<label for="paper_details_checkbox" class="checkbox-inline">Paper</label>
+			<input type="checkbox" value="paper_details" id="paper_details_checkbox" name="paper_details_checkbox">
 		</div>
 
 		<div class="col">
-			<label for="packaging_checkbox" class="checkbox-inline">Packaging</label>
-			<input type="checkbox" value="packaging" id="packaging_checkbox" name="packaging_checkbox">
+			<label for="packaging_details_checkbox" class="checkbox-inline">Packaging</label>
+			<input type="checkbox" value="packaging_details" id="packaging_details_checkbox" name="packaging_details_checkbox">
 		</div>
 
 		<div class="col">
@@ -175,29 +159,30 @@
 		</div>
 	</div>
 	<!--CHECKBOX ENDS HERE-->
-
+</form>
 <!--GENERAL DETAILS FORM ENDS-->
 <br>
 <!--FORM FOR THE SPECIFIC DETAILS STARTS HERE THEY ARE ONLY DISPLAYED WHEN THE USER CHECKS THE CHECKBOX-->
 <!--PAPER DETAILS START-->
-<div id="paper_form" style="display: none;">
+<div id="paper_details_form" style="display: none;">
 	<hr>
 	<h2>Paper Details</h2>
 	<hr>
+	<form action="#" method="post">
 		<div class="form-row">
 			<div class="col">
-				<label for="serial_number">Quantity</label>
-				<input class="form-control" type="number" step="1" id="paper_quantity" name="paper_quantity" >
+				<label for="serial_number">Serial number</label>
+				<input class="form-control" type="text" id="paper_serial_number" name="paper_serial_number">
 			</div>
 
 			<div class="col">
-				<label for="paper_col">Color</label>
-				<input class="form-control" type="text" id="paper_color" name="paper_color">
+				<label for="paper_col">Col</label>
+				<input class="form-control" type="text" id="paper_col" name="paper_col">
 			</div>
 
 			<div class="col">
 				<label for="paper_size">Size</label>
-				<input class="form-control" type="number" step="0.01" id="paper_size" name="paper_size">
+				<input class="form-control" type="text" id="paper_size" name="paper_size">
 			</div>
 		</div>
 
@@ -208,34 +193,26 @@
 			</div>
 
 			<div class="col">
-				<label for="paper_number_of_sheets">Number of sheets</label>
-				<input class="form-control" type="number" step="1" id="paper_number_of_sheets" name="paper_number_of_sheets">
+				<label for="number_of_sheets">Number of sheets</label>
+				<input class="form-control" type="text" id="number_of_sheets">
 			</div>
 
 			<div class="col">
-				<label for="paper_rate">Rate</label>
-				<input class="form-control" type="number" step="0.01" id="paper_rate" name="paper_rate">
-			</div>
-
-			<div class="col">
-				<label for="paper_vendor">Vendor</label>
-					<div class="form-group">
-						<select class="form-control" id="paper_vendor" name="paper_vendor">
-							{% for vendor in vendors %}
-							<option value={{vendor.pk}}>{{vendor.vendor_name}}</option>
-							{% endfor %}
-						</select>
-					</div>
+				<label for="print_vendor">Vendor</label>
+				<input class="form-control" type="text" id="print_vendor" name="print_vendor">
 			</div>
 		</div>
+
+	</form>
 </div>
 <!--PAPER DETAILS END-->
 
 <!--PACKAGING DETAILS START-->
-<div id="packaging_form" style="display: none;">
+<div id="packaging_details_form" style="display: none;">
 	<hr>
 	<h2>Packaging Details</h2>
 	<hr>
+	<form action="#" method="post">
 		<div class="form-row">
 			<div class="col">
 				<label for="serial_number">Serial number</label>
@@ -268,6 +245,7 @@
 				<input class="form-control" type="text" id="print_vendor" name="print_vendor">
 			</div>
 		</div>
+	</form>
 </div>
 <!--PACKAGING DETAILS END-->
 
@@ -276,6 +254,7 @@
 	<hr>
 	<h2>Binding</h2>
 	<hr>
+	<form action="#" method="post">
 		<div class="form-row">
 			<div class="col">
 				<label for="P/f">P/f</label>
@@ -325,6 +304,7 @@
 				</div>
 			</div>
 		</div>
+	</form>
 </div>
 
 <!--BINDING END-->
@@ -335,6 +315,7 @@
 	<hr>
 	<h2>CTP</h2>
 	<hr>
+	<form action="#" method="post">
 		<div class="form-row">
 			<div class="col">
 				<label for="paper_col">Col</label>
@@ -365,6 +346,7 @@
 
 
 		</div>
+	</form>
 </div>
 <!--CTP END-->
 
@@ -373,7 +355,9 @@
 	<hr>
 	<h2>Special Process</h2>
 	<hr>
+	<form action="#" method="post">
 		<div class="form-row">
+
 			<div class="col">
 				<label for="special_type">UV</label>
 				<div class="form-group">
@@ -408,6 +392,7 @@
 				<input class="form-control" type="text" id="print_vendor" name="print_vendor">
 			</div>
 		</div>
+	</form>
 </div>
 <!--SP END-->
 
@@ -416,6 +401,9 @@
 	<hr>
 	<h2>Raise</h2>
 	<hr>
+	<form action="#" method="post">
+
+
 		<div class="form-row">
 			<div class="col">
 				<label for="sel1">Type</label>
@@ -449,6 +437,7 @@
 				<input class="form-control" type="text" id="number_of_sheets">
 			</div>
 		</div>
+	</form>
 </div>
 
 <!--RAISE END-->
@@ -458,6 +447,7 @@
 	<hr>
 	<h2>Vanish</h2>
 	<hr>
+	<form action="#" method="post">
 		<div class="form-row">
 
 			<div class="col">
@@ -491,6 +481,7 @@
 				<input class="form-control" type="text" id="number_of_sheets">
 			</div>
 		</div>
+	</form>
 </div>
 <!--VANISH END-->
 
@@ -500,6 +491,7 @@
 	<hr>
 	<h2>Lamination</h2>
 	<hr>
+	<form action="#" method="post">
 		<div class="form-row">
 
 			<div class="col">
@@ -533,6 +525,7 @@
 				<input class="form-control" type="text" id="number_of_sheets">
 			</div>
 		</div>
+	</form>
 </div>
 <!--LAMINATION END-->
 
@@ -541,6 +534,7 @@
 	<hr>
 	<h2>Punch</h2>
 	<hr>
+	<form action="#" method="post">
 		<div class="form-row">
 			<div class="col">
 				<label for="No_sheets">No. of Sheets</label>
@@ -558,6 +552,7 @@
 			</div>
 
 		</div>
+	</form>
 </div>
 <!--PUNCH END-->
 
@@ -566,6 +561,7 @@
 	<hr>
 	<h2>Cutting</h2>
 	<hr>
+	<form action="#" method="post">
 		<div class="form-row">
 
 			<div class="col">
@@ -593,6 +589,7 @@
 
 		</div>
 
+	</form>
 </div>
 <!--CUTTING END-->
 
@@ -601,6 +598,7 @@
 	<hr>
 	<h2>Punching</h2>
 	<hr>
+	<form action="#" method="post">
 		<div class="form-row">
 
 			<div class="col">
@@ -628,6 +626,7 @@
 
 		</div>
 
+	</form>
 </div>
 <!--PUNCHING END-->
 
@@ -636,6 +635,7 @@
 	<hr>
 	<h2>Pasting</h2>
 	<hr>
+	<form action="#" method="post">
 		<div class="form-row">
 
 			<div class="col">
@@ -662,6 +662,7 @@
 
 
 		</div>
+	</form>
 </div>
 <!--PASTING END-->
 
@@ -670,6 +671,7 @@
 	<hr>
 	<h2>Folding</h2>
 	<hr>
+	<form action="#" method="post">
 		<div class="form-row">
 
 			<div class="col">
@@ -694,6 +696,7 @@
 				<input class="form-control" type="text" id="imp" name="imp">
 			</div>
 		</div>
+	</form>
 </div>
 <!--FOLDING END-->
 
@@ -702,6 +705,7 @@
 	<hr>
 	<h2>Creasing</h2>
 	<hr>
+	<form action="#" method="post">
 		<div class="form-row">
 
 			<div class="col">
@@ -728,6 +732,8 @@
 
 
 		</div>
+
+	</form>
 </div>
 <!--CREASING END-->
 
@@ -738,6 +744,7 @@
 	<hr>
 	<h2>Positive</h2>
 	<hr>
+	<form action="#" method="post">
 		<div class="form-row">
 
 			<div class="col">
@@ -771,14 +778,15 @@
 				<input class="form-control" type="text" id="number_of_sheets">
 			</div>
 		</div>
+	</form>
 </div>
 <!--POSITIVE END-->
-
 <!--UV START-->
 <div id="uv_form" style="display: none;">
 	<hr>
 	<h2>UV</h2>
 	<hr>
+	<form action="#" method="post">
 		<div class="form-row">
 			<div class="col">
 				<label for="sel1">Type</label>
@@ -808,6 +816,7 @@
 				<input class="form-control" type="text" id="number_of_sheets">
 			</div>
 		</div>
+	</form>
 </div>
 <!--UV END-->
 <!--4COL START-->
@@ -815,6 +824,7 @@
 	<hr>
 	<h2>4Col</h2>
 	<hr>
+	<form action="#" method="post">
 		<div class="form-row">
 		 <div class="col">
 			<label for="sel1">Type</label>
@@ -845,25 +855,30 @@
 			<input class="form-control" type="text" id="print_vendor" name="print_vendor">
 		</div>
 
-	</div>
-</div>
-<hr>
-<div>
- 	<input type="submit" class="btn btn-info btn-block" id="purchaseOrderFormSubmitBtn"></input>
 </div>
 </form>
-
+</div>
+<div>
+ <button type="button" class="btn btn-info btn-block">Submit Purchase Order Details</button>
+</div>
 
 <!--FORM FOR SPECIFIC DETAILS END HERE-->
 {% endblock %}
 
 {% block extrascripts %}
+<script type="text/javascript">
+	$(document).ready(function() {
+		$('#paper_details_checkbox').change(function() {
+			$('#paper_details_form').fadeToggle();
+		});
+	});
 
+</script>
 
 <script type="text/javascript">
 	$(document).ready(function() {
-		$('#packaging_checkbox').change(function() {
-			$('#packaging_form').fadeToggle();
+		$('#packaging_details_checkbox').change(function() {
+			$('#packaging_details_form').fadeToggle();
 		});
 	});
 
@@ -1003,59 +1018,4 @@
 	});
 
 </script>
-
-<!--Atleast one check box checked.-->
-<script>
-	$(document).ready(function () {
-    $('#purchaseOrderFormSubmitBtn').click(function() {
-      checked = $("input[type=checkbox]:checked").length;
-
-      if(!checked) {
-        alert("You must select atleast one process.");
-        return false;
-      }
-
-    });
-});
-</script>
-
-<!--If checkbox is checked then the input should be compulsory for paper checkbox-->
-
-<script>
-	$(function() {
-  var checkbox = $("#paper_checkbox");
-  var hidden = $("#paper_form");
-  hidden.hide();
-  checkbox.change(function() {
-    if (checkbox.is(':checked')) {
-      hidden.show();
-      $('#paper_quantity').prop('required', true); //to add required
-	  $('#paper_color').prop('required', true);
-	  $('#paper_gsm').prop('required', true);
-	  $('#paper_number_of_sheets').prop('required', true);
-	  $('#paper_rate').prop('required', true);
-	  $('#paper_size').prop('required', true);
-	  $('#paper_vendor').prop('required', true);
-    } else {
-      hidden.hide();
-      $("#paper_quantity").val("");
-      $('#paper_quantity').prop('required', false); //to remove required
-	  $("#paper_color").val("");
-      $('#paper_color').prop('required', false);
-	  $("#paper_gsm").val("");
-      $('#paper_gsm').prop('required', false);
-	  $("#paper_number_of_sheets").val("");
-      $('#paper_number_of_sheets').prop('required', false);
-	  $("#paper_rate").val("");
-      $('#paper_rate').prop('required', false);
-	  $("#paper_size").val("");
-      $('#paper_size').prop('required', false);
-	  $("#paper_vendor").val("");
-      $('#paper_vendor').prop('required', false);
-	  
-    }
-  });
-});
-</script>
-
 {% endblock extrascripts %}

@@ -1,5 +1,6 @@
 {% extends 'purchase_order_management/base.html' %}
 
+{% load client_list_filters %}
 {% load staticfiles %}
 
 {% block stylesheets %}
@@ -28,22 +29,14 @@
                 <th>Client Name</th>
                 <th>Client Total Amount</th>
                 <th>Client Amount Due</th>
-                <th>Update</th>
             </tr>
         </thead>
         <tbody>
             {% for client in clients %}
                 <tr>
                     <td>{{client.client_name}}</td>
-                    <td>{{client.client_total_amount}}</td>
-                    <td>{{client.client_amount_due}}</td>
-                    <td>
-                        <center>
-                            <button type="button" class="update-client-list btn btn-sm btn-primary" data-id="{% url 'purchase_order_management:update_client_list' client.pk %}">
-                                <span class="fa fa-pencil">Update</span>
-                            </button>
-                        </center>
-                    </td>
+                    <td>{{clients_total_amount|get_item:client.pk}}</td>
+                    <td>{{clients_total_amount_due|get_item:client.pk}}</td>
                 </tr>
             {% endfor %}
         </tbody>
@@ -61,13 +54,4 @@
         } );
     </script>
 
-    <script type="text/javascript">
-        $(function () {
-            // Update Client List
-            $(".update-client-list").each(function () {
-                $(this).modalForm({formURL: $(this).data('id')});
-            });
-
-        });
-</script>    
 {% endblock%}
