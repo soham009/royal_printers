@@ -32,6 +32,7 @@
                 <th>Purchase Order Item Quantity</th>
                 <th>Process List</th>
                 <th>Amount</th>
+                <th>Amount Due</th>
                 <th>Summary</th>
                 <th>Delete</th>
                 <th>Update</th>
@@ -51,6 +52,7 @@
                         {% endfor %}
                     </td>
                     <td>{{purchase_order.purchase_order_amount}}</td>
+                    <td>{{purchase_order.purchase_order_amount_due}}</td>
                     <td>
                         <center>
                             <button type="button" class="btn btn-sm btn-primary">
