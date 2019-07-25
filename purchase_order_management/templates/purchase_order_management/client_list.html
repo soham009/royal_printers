@@ -22,7 +22,8 @@
     </div>
 
     <hr>
-
+    <center><button class="create-client-list btn btn-primary" type="button" name="button">Create Client</button></center>
+    <hr>
     <table id="clientList">
         <thead>
             <tr>
@@ -54,4 +55,10 @@
         } );
     </script>
 
+    <script type="text/javascript">
+        $(function () {
+            // Create client button
+            $(".create-client-list").modalForm({formURL: "{% url 'purchase_order_management:create_client_list' %}"});
+            });
+    </script>
 {% endblock%}

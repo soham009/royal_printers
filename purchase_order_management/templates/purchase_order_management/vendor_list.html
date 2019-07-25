@@ -1,6 +1,7 @@
 {% extends 'purchase_order_management/base.html' %}
 
 {% load staticfiles %}
+{% load vendor_list_filters %}
 
 {% block stylesheets %}
 <link rel="stylesheet" href="//cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css">
@@ -21,7 +22,8 @@
     </div>
 
     <hr>
-
+    <center><button class="create-vendor-list btn btn-primary" type="button" name="button">Create Vendor</button></center>
+    <hr>
     <table id="vendorList">
         <thead>
             <tr>
@@ -29,7 +31,6 @@
                 <th>Vendor Address</th>
                 <th>Vendor Total Amount</th>
                 <th>Vendor Amount Due</th>
-                <th>Update</th>
             </tr>
         </thead>
         <tbody>
@@ -37,15 +38,8 @@
                 <tr>
                     <td>{{vendor.vendor_name}}</td>
                     <td>{{vendor.vendor_address}}</td>
-                    <td>{{vendor.vendor_total_amount}}</td>
-                    <td>{{vendor.vendor_amount_due}}</td>
-                    <td>
-                        <center>
-                            <button type="button" class="update-vendor-list btn btn-sm btn-primary" data-id="{% url 'purchase_order_management:update_vendor_list' vendor.pk %}">
-                                <span class="fa fa-pencil">Update</span>
-                            </button>
-                        </center>
-                    </td>
+                    <td>{{vendors_total_amount|get_item:vendor.pk}}</td>
+                    <td>{{vendors_total_amount_due|get_item:vendor.pk}}</td>
                 </tr>
             {% endfor %}
         </tbody>
@@ -65,11 +59,8 @@
 
     <script type="text/javascript">
         $(function () {
-            // Update vendor List
-            $(".update-vendor-list").each(function () {
-                $(this).modalForm({formURL: $(this).data('id')});
+            // Create vendor button
+            $(".create-vendor-list").modalForm({formURL: "{% url 'purchase_order_management:create_vendor_list' %}"});
             });
-
-        });
-</script>    
+    </script>
 {% endblock%}

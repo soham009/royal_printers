@@ -19,8 +19,6 @@ class Vendor(models.Model):
     # DataFields
     vendor_name = models.CharField(max_length=200)
     vendor_address = models.CharField(max_length=400)
-    vendor_total_amount = models.FloatField()
-    vendor_amount_due  = models.FloatField()
 
     def __str__(self):
         return str(self.pk)
@@ -32,17 +30,44 @@ class Client(models.Model):
     def __str__(self):
         return str(self.pk)
 
+
+class PurchaseOrder(models.Model):
+    # DataFields
+    purchase_order_item = models.CharField(max_length=200)
+    purchase_order_item_quantity = models.IntegerField()
+    purchase_order_size = models.CharField(max_length=200)
+    purchase_order_number_of_columns = models.IntegerField(blank=True)
+    purchase_order_created_on = models.DateTimeField(auto_now_add=True)
+    purchase_order_updated_on = models.DateTimeField(auto_now=True)
+    purchase_order_purchase_date = models.DateField()
+    purchase_order_purchase_by = models.DateField()
+    purchase_order_name = models.CharField(max_length=200)
+    purchase_order_po_number = models.IntegerField()
+    purchase_order_number = models.IntegerField()
+    purchase_order_amount = models.FloatField()
+    purchase_order_amount_due = models.FloatField()
+
+    # Relation with the user,client  and the processes.
+    purchase_order_user_id = models.ForeignKey(CustomUser, on_delete = models.CASCADE)
+    purchase_order_client_id = models.ForeignKey(Client, on_delete= models.CASCADE)
+    
+
+    def __str__(self):
+        return str(self.pk)
+
 class Process(models.Model):
 
     # Datafields
     process_name = models.CharField(max_length=100)
     process_created_on = models.DateTimeField(auto_now_add=True)
     process_updated_on = models.DateTimeField(auto_now=True)
-    process_size = models.CharField(max_length=100)
+    process_size = models.CharField(max_length=300)
     process_amount = models.FloatField()
+    process_amount_due = models.FloatField()
 
-    # Relationship of process with vendor
+    # Relationship of process with vendor and purchase order
     process_vendor_id = models.ForeignKey(Vendor, on_delete = models.CASCADE)
+    process_purchase_order_id = models.ForeignKey(PurchaseOrder, on_delete = models.CASCADE)
 
     def __str__(self):
         return str(self.pk)
@@ -51,7 +76,7 @@ class Paper(Process):
 
     # DataFields
     paper_color = models.CharField(max_length=100)
-    paper_gsm = models.CharField(max_length = 100)
+    paper_gsm = models.CharField(max_length=300)
     paper_number_of_sheets = models.IntegerField()
     paper_quantity = models.IntegerField()
     paper_rate = models.FloatField()
@@ -373,30 +398,6 @@ class SpecialProcess(Process):
         return str(self.pk)
     
 
-class PurchaseOrder(models.Model):
-    # DataFields
-    purchase_order_item = models.CharField(max_length=200)
-    purchase_order_item_quantity = models.IntegerField()
-    purchase_order_size = models.CharField(max_length=200)
-    purchase_order_number_of_columns = models.IntegerField(blank=True)
-    purchase_order_created_on = models.DateTimeField(auto_now_add=True)
-    purchase_order_updated_on = models.DateTimeField(auto_now=True)
-    purchase_order_purchase_date = models.DateField()
-    purchase_order_purchase_by = models.DateField()
-    purchase_order_name = models.CharField(max_length=200)
-    purchase_order_po_number = models.IntegerField()
-    purchase_order_number = models.IntegerField()
-    purchase_order_amount = models.FloatField()
-    purchase_order_amount_due = models.FloatField()
-
-    # Relation with the user,client  and the processes.
-    purchase_order_user_id = models.ForeignKey(CustomUser, on_delete = models.CASCADE)
-    purchase_order_client_id = models.ForeignKey(Client, on_delete= models.CASCADE)
-    purchase_order_process_relation = models.ManyToManyField(Process)
-    
-
-    def __str__(self):
-        return str(self.pk)+" "+str(self.purchase_order_client_id)
     
 
 

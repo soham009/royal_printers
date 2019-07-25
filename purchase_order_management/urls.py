@@ -32,13 +32,26 @@ urlpatterns = [
 
     # url for client list
     path('client_list/', views.client_list, name ='client_list'),
+    
+    # url for client list create modal
+    path('create_client_list/', views.ClientCreateView.as_view(), name ='create_client_list'),
+
+    # url for process list
+    path('process_list/', views.process_list, name ='process_list'),
+
+    
+    # url for purchase order list delete modal
+    path('delete_process_list/<int:pk>/', views.ProcessDeleteView.as_view(), name='delete_process_list'),
+
+    # url for purchase order list update modal
+    path('update_process_list/<int:pk>/', views.ProcessUpdateView.as_view(), name='update_process_list'),
 
     
     # url for vendor list
     path('vendor_list/', views.vendor_list, name ='vendor_list'),
 
-    # url for vendor list update modal
-    path('update_vendor_list/<int:pk>/', views.VendorUpdateView.as_view(), name='update_vendor_list'),
+    # url for vendor list create modal
+    path('create_vendor_list/', views.VendorCreateView.as_view(), name ='create_vendor_list'),
 
     # url for submitting purchase order form
     path('purchase_order_form/submit/', views.purchase_order_form_submit, name='purchase_order_form_submit'),

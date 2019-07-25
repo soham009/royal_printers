@@ -1,8 +1,8 @@
 from django.shortcuts import render, get_object_or_404, get_list_or_404, HttpResponseRedirect
-from .models import PurchaseOrder, Client, Vendor, CustomUser, Paper
-from bootstrap_modal_forms.generic import BSModalDeleteView, BSModalUpdateView
+from .models import PurchaseOrder, Client, Vendor, CustomUser, Paper, Process
+from bootstrap_modal_forms.generic import BSModalDeleteView, BSModalUpdateView, BSModalCreateView
 from django.urls import reverse_lazy, reverse
-from .forms import ClientForm, VendorForm, CustomUserForm, PurchaseOrderForm
+from .forms import ClientForm, VendorForm, CustomUserForm, PurchaseOrderForm, ProcessForm
 from django.contrib.auth import login, logout, authenticate
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.hashers import make_password
@@ -31,12 +31,32 @@ class PurchaseOrderUpdateView(BSModalUpdateView):
     success_message = 'Success: Purchase Order was updated.'
     success_url = reverse_lazy('purchase_order_management:purchase_order_list')
 
-class VendorUpdateView(BSModalUpdateView):
-    model = Vendor
+
+class ProcessDeleteView(BSModalDeleteView):
+    model = Process
+    template_name = 'purchase_order_management/process_list_delete.html'
+    success_message = 'Success: Process was deleted.'
+    success_url = reverse_lazy('purchase_order_management:process_list')
+
+class ProcessUpdateView(BSModalUpdateView):
+    model = Process
+    form_class = ProcessForm
+    template_name = 'purchase_order_management/process_list_update.html'
+    success_message = 'Success: Process was updated.'
+    success_url = reverse_lazy('purchase_order_management:process_list')
+
+class ClientCreateView(BSModalCreateView):
+    template_name = 'purchase_order_management/client_list_create.html'
+    form_class = ClientForm
+    success_message = 'Success: Client was created.'
+    success_url = reverse_lazy('purchase_order_management:client_list')
+
+class VendorCreateView(BSModalCreateView):
+    template_name = 'purchase_order_management/vendor_list_create.html'
     form_class = VendorForm
-    template_name = 'purchase_order_management/vendor_list_update.html'
-    success_message = 'Success: Vendor was updated.'
+    success_message = 'Success: Vendor was created.'
     success_url = reverse_lazy('purchase_order_management:vendor_list')
+
 
 def purchase_list(request):
     """Generates the list of all the purchase orders and the processes in each of the purchase order.
@@ -51,16 +71,31 @@ def purchase_list(request):
     # Generate the list of processes for each purchase order
     process_list = []
     for purchase_order in purchase_orders:
-        # Getting all the processes in a purchase order using manytomany_relation.all() method
+        # Getting all the processes in a purchase order.
         # and appending it to the above process_list.
-        process_list.append(purchase_order.purchase_order_process_relation.all())
+        process_list.append(purchase_order.process_set.all())
 
     data = {
         'purchase_orders': zip(purchase_orders,process_list),
         'user_role': user_role
-        
      }
     return render(request, 'purchase_order_management/purchase_order_list.html', data )
+
+def process_list(request):
+    """Generates the list of all the processes.
+    Parameters: HttpRequest object
+    Returns : Nothing"""
+
+    user_role = request.user.user_role
+
+    # Get all the processes or raise a 404 exception if no purchase orders
+    processes = Process.objects.all()
+
+    data = {
+        'processes': processes,
+        'user_role': user_role
+     }
+    return render(request, 'purchase_order_management/process_list.html', data )
 
 def client_list(request):
     """Generates the list of all the clients.
@@ -95,8 +130,20 @@ def vendor_list(request):
     user_role = request.user.user_role
     # Get all the clients.
     vendors = Vendor.objects.all()
+    vendors_total_amount = {}
+    vendors_total_amount_due = {}
+    for vendor in vendors:
+        total_amount = 0
+        total_amount_due = 0
+        for process in vendor.process_set.all():
+            total_amount += process.process_amount
+            total_amount_due += process.process_amount_due
+        vendors_total_amount[vendor.pk]=total_amount
+        vendors_total_amount_due[vendor.pk]=total_amount_due
     data = {
         'vendors': vendors,
+        'vendors_total_amount': vendors_total_amount,
+        'vendors_total_amount_due': vendors_total_amount_due,
         'user_role': user_role
      }
     return render(request, 'purchase_order_management/vendor_list.html', data )
@@ -247,13 +294,10 @@ def purchase_order_form_submit(request):
             
             # Create the paper object.
             paper = Paper.objects.create(process_name = process_name, process_size = process_size,
-                                    process_amount = process_amount, paper_quantity = paper_quantity,
+                                    process_amount = process_amount, process_amount_due = process_amount,paper_quantity = paper_quantity,
                                     paper_color = paper_color, paper_gsm = paper_gsm,
                                      paper_number_of_sheets = paper_number_of_sheets,
-                                     paper_rate = paper_rate,process_vendor_id = process_vendor_id
-                                     )
+                                     paper_rate = paper_rate,process_vendor_id = process_vendor_id, process_purchase_order_id = purchase_order)
 
-            # Add the paper object in the many to many relation with the above purchase order object.
-            purchase_order.purchase_order_process_relation.add(paper)
     return HttpResponseRedirect(reverse('purchase_order_management:purchase_order_list'))
 
