@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import AbstractUser
+from model_utils.managers import InheritanceManager
 
 # Create your models here.
 
@@ -64,6 +65,7 @@ class Process(models.Model):
     process_size = models.CharField(max_length=300)
     process_amount = models.FloatField()
     process_amount_due = models.FloatField()
+    objects = InheritanceManager()
 
     # Relationship of process with vendor and purchase order
     process_vendor_id = models.ForeignKey(Vendor, on_delete = models.CASCADE)

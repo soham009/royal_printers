@@ -56,7 +56,9 @@
                     <td>
                         <center>
                             <button type="button" class="btn btn-sm btn-primary">
+                               <a href="{% url 'purchase_order_management:order_summary' purchase_order_id=purchase_order.pk %}">
                                 Summary
+                                </a>
                             </button>
                         </center>
                     </td>

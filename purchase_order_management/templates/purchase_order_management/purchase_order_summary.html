@@ -1,3 +1,282 @@
-{% extends 'purchase_order_management/base.html' %}
+{% extends 'purchase_order_management/purchase_order_summary_base.html' %}
 
-{% load staticfiles %}
+{% block content %}
+        <div class="square">
+        <div class="container">
+        <!--FORM FOR SPECIFIC DETAILS END HERE-->
+        <div class="row child">
+    <div class="col-md">
+        Purchase Order Name: {{purchase_order.purchase_order_item}}
+    </div>
+    <div class="col-md">
+      Purchase Order Number: {{purchase_order.purchase_order_number}}
+    </div>
+    <div class="col-md">
+      PO Number: {{purchase_order.purchase_order_po_number}}
+    </div>
+    </div>
+
+                    <div class="row child">
+                        <div class="col-md">
+                            Items: {{purchase_order.purchase_order_item}}
+                        </div>
+                         <div class="col-md">
+                            Quantity: {{purchase_order.purchase_order_item_quantity}}
+                        </div>
+                        <div class="col-md">
+                            Size: {{purchase_order.purchase_order_size}}
+                        </div>
+                        <div class="col-md">
+                            No. of columns: {{purchase_order.purchase_order_number_of_columns}}
+                        </div>
+                    </div>
+                 
+                    <div class="row child">
+                        <div class="col-md">
+                            Purchase Date: {{purchase_order.purchase_order_created_on}}
+                        </div>
+                        <div class="col-md">
+                            Purchase By: {{user_name}}
+                        </div>
+                        <div class="col-md">
+                            Client: {{purchase_order.purchase_order_item}}
+                        </div>
+                        <div class="col-md">
+                            Amount: {{purchase_order.purchase_order_amount}}
+                        </div>
+
+                    </div>
+
+                    <div class="row child1">
+                    <div class = "col-md" id="flex1">
+                             <div class="row child2">
+                                 <div class="col-md" id="vertical">
+                                     <b><center>Paper</center></b>
+                                     <div id="align">
+                                    Vendor: {{process.Paper.process_vendor_id}}
+                                    <br>color: {{process.Paper.paper_color}}
+                                    <br>GSM: {{process.Paper.paper_gsm}}
+                                    <br>Size:
+                                    <br>No. of sheets:
+                                    <br>Quantity:
+                                    <br>Rate:
+                                    <br>amount:
+                                 </div>
+                                 </div>
+                                 <div class="col-md" id="vertical">
+                                 <b><center>Printing</center></b>
+                                     <div id="align">
+                                     Vendor:
+                                     <br>Size:
+                                     <br>Quantity:
+                                     <br>Detail:
+                                     <br>No. of cols:
+                                     <br>Impression:
+                                     <br>rate:
+                                     <br>amount:
+                                 </div>
+                                 </div>
+                                 <div class="col-md" id="vertical">
+                                 <b><center>Binding</center></b>
+                                     <div id="align">
+                                     Vendor:         
+                                     <br>p/f: 
+                                     <br>type: 
+                                     <br>product: 
+                                     <br>quantity:
+                                     <br>binding_type: 
+                                     <br>rate:
+                                     <br>amount:
+                                 </div>
+                                 </div>
+                                 
+                                 <div class="col-md">
+                                 <b><center>Lamination</center></b> 
+                                 <div id="align">
+                                 Vendor:
+                                 <br>Type:
+                                 <br>rate:
+                                 <br>size:
+                                 <br>quantity:
+                                 <br>no_of_sheets:     
+                                 <br>length breadth:
+                                 <br>amount:
+                                 </div>
+                                 </div>
+                                 </div>
+                            
+                                      <div class="row child2">
+                                          <div class="col-md" id="vertical">
+                                              <b><center>CTP</center></b>
+                                              <div id="align">
+                                                Vendor:
+                                                <br>size:
+                                                <br>type:
+                                                <br>no_of_plates:
+                                                <br>rate: 
+                                                <br>quantity:
+                                                <br>amount:
+                                           </div>
+                                           </div> 
+                                          
+                                          <div class="col-md" id="vertical">
+                                           <b><center>Cutting</center></b>
+                                              <div id="align">
+                                                Vendor:
+                                                <br>size:
+                                                <br>quantity:
+                                                <br>paper:
+                                                <br>rate:
+                                                <br>amount:
+                                              </div>
+                                          </div>
+                                              
+                                          <div class="col-md" id="vertical">
+                                          <b><center>Folding</center></b>
+                                              <div id="align">
+                                              Vendor:
+                                              <br>no_of_folds:
+                                              <br>quantity:
+                                              <br>rate:
+                                              <br>impression:
+                                              <br>amount:
+                                              </div>
+                                          </div> 
+                                          
+                                          <div class="col-md">
+                                          <b><center>Pasting</center></b>
+                                              <div id="align">
+                                              Vendor:
+                                              <br>impression: 
+                                              <br>size: 
+                                              <br>no_of_pasting: 
+                                              <br>quantity: 
+                                              <br>rate:
+                                              <br>amount:
+                                          </div>
+                                          </div>
+                                          </div>
+                                          
+                                            <div class="row child2" >
+                                              <div class="col-md" id="vertical">
+                                              <b><center>Creasing</center></b>
+                                                  <div id="align">
+                                                  Vendor:
+                                                  <br>size: 
+                                                  <br>quantity:
+                                                  <br>impression:
+                                                  <br>rate:
+                                                  <br>amount:
+                                              </div>
+                                                </div>
+                                                
+                                                <div class="col-md" id="vertical">
+                                                <b><center>Punch</center></b>
+                                                  <div id="align">
+                                                  Vendor:
+                                                  <br>size: 
+                                                  <br>no_of:
+                                                  <br>amount:
+                                              </div>
+                                              </div>
+                                                
+                                              <div class="col-md" id="vertical">
+                                                  <b><center>Block</center></b>
+                                                  <div id="align">
+                                                  Vendor:
+                                                  <br>size: 
+                                                  <br>no_of:
+                                                  <br>amount:
+                                              </div>
+                                            </div>
+                                                 
+                                               <div class="col-md">
+                                                <b><center>Punching</center></b>
+                                                   <div id="align">
+                                                   Vendor:
+                                                   <br>size:             
+                                                   <br>quantity:
+                                                   <br>impression:      
+                                                   <br>rate:
+                                                   <br>amount:
+                                               </div>
+                                               </div>
+                                               </div>
+                        
+                        
+                                            <div class="row child2" >
+                                              <div class="col-md" id="vertical">
+                                              <b><center>4col</center></b>
+                                                  <div id="align">
+                                                  Vendor:
+                                                  <br>size: 
+                                                  <br>quantity:
+                                                  <br>impression:
+                                                  <br>rate:
+                                                      <br>amount:
+                                              </div>
+                                              </div>
+                                                
+                                              <div class="col-md" id="vertical">
+                                                <b><center>Raise UV</center></b>
+                                                  <div id="align">
+                                                  Vendor:
+                                                  <br>type:
+                                                  <br>size:
+                                                  <br>no_of_sheets:
+                                                  <br>quantity:
+                                                  <br>length breadth: 
+                                                  <br>rate:
+                                                     <br>amount:
+                                              </div>
+                                              </div>   
+                                                
+                                              <div class="col-md" id="vertical">
+                                                <b><center>Varnish</center></b>
+                                                  <div id="align">
+                                                  Vendor:
+                                                  <br>size: 
+                                                  <br>no_of:
+                                                  <br>amount:
+                                                  </div>
+                                                  </div>
+                                                
+                                                <div class="col-md">
+                                                <b><center>Positive</center></b>
+                                                   <div id="align">
+                                                      Vendor:
+                                                      <br>Size: 
+                                                      <br>quantity:
+                                                      <br>impression:
+                                                      <br>rate:
+                                                      <br>amount:
+                                                  </div>
+                                                </div>
+                                        </div>
+
+                                                  <div class="row child1">
+                                                  <div class="col-md" id="vertical1">
+                                                  <b><center>Special Process</center></b>
+                                                 <div id="align">
+                                                      Vendor:
+                                                      <br>type:
+                                                      <br>size:
+                                                      <br>no_of_sheets:
+                                                      <br>quantity:
+                                                      <br>length breadth: 
+                                                      <br>rate:
+                                                      <br>amount:
+                                                  </div>
+                                                </div>
+                                                <div class="col-md">
+                                                <b><center>Summary</center></b>
+                                                <div id="align">
+                                                    <br>Cost Price: {{Summary.cost_price}}
+                                                    <br>Selling Price: {{Summary.selling_price}}
+                                                    <br>Profit / Loss: {{Summary.profit_loss}}
+                                     </div>
+                                                </div>
+                                        </div>
+                                        </div>
+    <!-- Optional JavaScript -->
+{% endblock %}

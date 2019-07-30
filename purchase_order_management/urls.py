@@ -1,5 +1,5 @@
 from django.contrib import admin
-from django.urls import path
+from django.urls import path, re_path
 from purchase_order_management import views
 
 app_name = 'purchase_order_management'
@@ -82,9 +82,14 @@ urlpatterns = [
     # url for submitting purchase order form
     path('purchase_order_form/submit/', views.purchase_order_form_submit, name='purchase_order_form_submit'),
 
-    path('error_404/', views.error_404, name ='error_404'),
+    # url for profile page
     path('my_profile/', views.profile, name ='profile'),
+
+    # url for report error page
     path('report_error/', views.report_error, name ='report_errors'),
+
+     # url for Purchase Order Form
+    path('purchase_order_summary/<int:purchase_order_id>/', views.purchase_order_summary, name='order_summary'),
 
 
 ]

@@ -701,7 +701,7 @@ def purchase_order_form_submit(request):
             fourcol_rate = request.POST['fourcol_rate']
             fourcol_unit = request.POST['fourcol_unit']
 
-            process_name = '4col'
+            process_name = 'FourCol'
             process_vendor_id = Vendor.objects.get(pk=request.POST['fourcol_vendor'])
             process_size = request.POST['fourcol_size']
             process_amount = float(fourcol_rate)*float(fourcol_unit)*1000
@@ -715,3 +715,32 @@ def purchase_order_form_submit(request):
 
     return HttpResponseRedirect(reverse('purchase_order_management:purchase_order_list'))
 
+def purchase_order_summary(request,purchase_order_id):
+    user_role = request.user.user_role
+    user_name = request.user.username
+
+    # Get Purchase Order Object as per Purchase Order Id Passed
+    purchase_order = PurchaseOrder.objects.get(pk=purchase_order_id)
+    # Generate the list of processes for Purchase Order Id Passed
+    processes = Process.objects.filter(process_purchase_order_id=purchase_order_id).select_subclasses()
+    process_list = list(processes)
+    process_dict = {}
+    cost_price = 0
+    for process in processes:
+        process_dict[process.process_name] = process
+        cost_price += process.process_amount
+    profit_loss = purchase_order.purchase_order_amount - cost_price
+    # Generate Summary Dictionary
+    summary_dict = {
+        'selling_price': purchase_order.purchase_order_amount,
+        'cost_price': cost_price,
+        'profit_loss': profit_loss,
+    }
+    data = {
+        'purchase_order': purchase_order,
+        'user_role': user_role,
+        'user_name': user_name,
+        'process': process_dict,
+        'Summary': summary_dict,
+     }
+    return render(request, 'purchase_order_management/purchase_order_summary.html', data )
