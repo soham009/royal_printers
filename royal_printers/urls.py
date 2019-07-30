@@ -16,8 +16,13 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 import purchase_order_management
+from django.conf.urls import handler400,handler500
+from purchase_order_management import views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include("purchase_order_management.urls")),
 ]
+
+handler404 = views.error_404
+handler500 = views.error_500

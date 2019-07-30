@@ -5,12 +5,13 @@ from django.urls import reverse_lazy, reverse
 from .forms import ClientForm, VendorForm, CustomUserForm, PurchaseOrderForm, ProcessForm
 from django.contrib.auth import login, logout, authenticate
 from django.contrib.auth.decorators import login_required
+from django.utils.decorators import method_decorator
 from django.contrib.auth.hashers import make_password
 import datetime
 
 
 # Create your views here.
-
+@method_decorator(login_required, name='dispatch')
 class CustomUserUpdateView(BSModalUpdateView):
     model = CustomUser
     template_name = 'purchase_order_management/user_list_update.html'
@@ -18,12 +19,14 @@ class CustomUserUpdateView(BSModalUpdateView):
     success_message = 'Success: User was updated.'
     success_url = reverse_lazy('purchase_order_management:user_list')
 
+@method_decorator(login_required, name='dispatch')
 class PurchaseOrderDeleteView(BSModalDeleteView):
     model = PurchaseOrder
     template_name = 'purchase_order_management/purchase_order_list_delete.html'
     success_message = 'Success: Purchase order was deleted.'
     success_url = reverse_lazy('purchase_order_management:purchase_order_list')
 
+@method_decorator(login_required, name='dispatch')
 class PurchaseOrderUpdateView(BSModalUpdateView):
     model = PurchaseOrder
     form_class = PurchaseOrderForm
@@ -31,13 +34,14 @@ class PurchaseOrderUpdateView(BSModalUpdateView):
     success_message = 'Success: Purchase Order was updated.'
     success_url = reverse_lazy('purchase_order_management:purchase_order_list')
 
-
+@method_decorator(login_required, name='dispatch')
 class ProcessDeleteView(BSModalDeleteView):
     model = Process
     template_name = 'purchase_order_management/process_list_delete.html'
     success_message = 'Success: Process was deleted.'
     success_url = reverse_lazy('purchase_order_management:process_list')
 
+@method_decorator(login_required, name='dispatch')
 class ProcessUpdateView(BSModalUpdateView):
     model = Process
     form_class = ProcessForm
@@ -46,6 +50,7 @@ class ProcessUpdateView(BSModalUpdateView):
     success_url = reverse_lazy('purchase_order_management:process_list')
 
 
+@method_decorator(login_required, name='dispatch')
 class PurchaseOrderProcessDetailDeleteView(BSModalDeleteView):
     model = Process
     template_name = 'purchase_order_management/process_list_delete.html'
@@ -56,6 +61,8 @@ class PurchaseOrderProcessDetailDeleteView(BSModalDeleteView):
         purchase_order_id = process.process_purchase_order_id
         return reverse_lazy('purchase_order_management:purchase_order_list_detail', kwargs={'pk': purchase_order_id })
 
+
+@method_decorator(login_required, name='dispatch')
 class PurchaseOrderProcessDetailUpdateView(BSModalUpdateView):
     model = Process
     form_class = ProcessForm
@@ -67,12 +74,16 @@ class PurchaseOrderProcessDetailUpdateView(BSModalUpdateView):
         purchase_order_id = process.process_purchase_order_id
         return reverse_lazy('purchase_order_management:purchase_order_list_detail', kwargs={'pk': purchase_order_id })
 
+
+@method_decorator(login_required, name='dispatch')
 class ClientCreateView(BSModalCreateView):
     template_name = 'purchase_order_management/client_list_create.html'
     form_class = ClientForm
     success_message = 'Success: Client was created.'
     success_url = reverse_lazy('purchase_order_management:client_list')
 
+
+@method_decorator(login_required, name='dispatch')
 class VendorCreateView(BSModalCreateView):
     template_name = 'purchase_order_management/vendor_list_create.html'
     form_class = VendorForm
@@ -80,7 +91,7 @@ class VendorCreateView(BSModalCreateView):
     success_url = reverse_lazy('purchase_order_management:vendor_list')
 
 
-
+@method_decorator(login_required, name='dispatch')
 class VendorProcessDetailDeleteView(BSModalDeleteView):
     model = Process
     template_name = 'purchase_order_management/process_list_delete.html'
@@ -91,6 +102,7 @@ class VendorProcessDetailDeleteView(BSModalDeleteView):
         vendor_id = process.process_vendor_id
         return reverse_lazy('purchase_order_management:vendor_list_detail', kwargs={'pk': vendor_id })
 
+@method_decorator(login_required, name='dispatch')
 class VendorProcessDetailUpdateView(BSModalUpdateView):
     model = Process
     form_class = ProcessForm
@@ -102,7 +114,7 @@ class VendorProcessDetailUpdateView(BSModalUpdateView):
         vendor_id = process.process_vendor_id
         return reverse_lazy('purchase_order_management:vendor_list_detail', kwargs={'pk': vendor_id })
 
-
+@method_decorator(login_required, name='dispatch')
 class ClientPurchaseOrderDetailDeleteView(BSModalDeleteView):
     model = PurchaseOrder
     template_name = 'purchase_order_management/purchase_order_list_delete.html'
@@ -113,6 +125,7 @@ class ClientPurchaseOrderDetailDeleteView(BSModalDeleteView):
         client_id = purchase_order.purchase_order_client_id
         return reverse_lazy('purchase_order_management:client_list_detail', kwargs={'pk': client_id })
 
+@method_decorator(login_required, name='dispatch')
 class ClientPurchaseOrderDetailUpdateView(BSModalUpdateView):
     model = PurchaseOrder
     form_class = PurchaseOrderForm
@@ -124,7 +137,7 @@ class ClientPurchaseOrderDetailUpdateView(BSModalUpdateView):
         client_id = purchase_order.purchase_order_client_id
         return reverse_lazy('purchase_order_management:client_list_detail', kwargs={'pk': client_id })
 
-
+@login_required
 def purchase_list(request):
     """Generates the list of all the purchase orders and the processes in each of the purchase order.
     Parameters: HttpRequest object
@@ -148,6 +161,7 @@ def purchase_list(request):
      }
     return render(request, 'purchase_order_management/purchase_order_list.html', data )
 
+@login_required
 def purchase_order_list_details(request, pk):
     user_role = request.user.user_role
     purchase_order = PurchaseOrder.objects.get(pk=pk)
@@ -160,7 +174,7 @@ def purchase_order_list_details(request, pk):
     return render(request,'purchase_order_management/purchase_order_detail_view.html',data)
 
 
-
+@login_required
 def process_list(request):
     """Generates the list of all the processes.
     Parameters: HttpRequest object
@@ -177,6 +191,7 @@ def process_list(request):
      }
     return render(request, 'purchase_order_management/process_list.html', data )
 
+@login_required
 def client_list(request):
     """Generates the list of all the clients.
     Parameters: HttpRequest object
@@ -203,6 +218,7 @@ def client_list(request):
      }
     return render(request, 'purchase_order_management/client_list.html', data )
 
+@login_required
 def client_list_details(request, pk):
     user_role = request.user.user_role
     client = Client.objects.get(pk=pk)
@@ -221,6 +237,7 @@ def client_list_details(request, pk):
     }
     return render(request,'purchase_order_management/client_detail_view.html',data)
 
+@login_required
 def vendor_list(request):
     """Generates the list of all the vendors.
     Parameters: HttpRequest object
@@ -246,6 +263,7 @@ def vendor_list(request):
      }
     return render(request, 'purchase_order_management/vendor_list.html', data )
 
+@login_required
 def vendor_list_details(request, pk):
     user_role = request.user.user_role
     vendor = Vendor.objects.get(pk=pk)
@@ -257,11 +275,12 @@ def vendor_list_details(request, pk):
     }
     return render(request,'purchase_order_management/vendor_detail_view.html',data)
 
-
+@login_required
 def home(request):
     data = { }
     return render(request, 'home.html', data )
 
+@login_required
 def purchase_order_form(request):
     user_role = request.user.user_role
     vendors = Vendor.objects.all()
@@ -316,10 +335,7 @@ def user_sign_up(request):
     else:
         return render(request, 'purchase_order_management/registration/sign_up.html')
 
-def error_404(request):
-    data = { }
-    return render(request, 'purchase_order_management/404.html', data )
-
+@login_required
 def profile(request):
     """Generates User Profile Details
     Parameters: HttpRequest object
@@ -332,12 +348,14 @@ def profile(request):
     return render(request, 'purchase_order_management/profile.html', data )
 
 
+@login_required
 def user_list(request):
     user_role = request.user.user_role
     users = CustomUser.objects.all()
     data = { 'users' : users, 'user_role': user_role }
     return render(request, 'purchase_order_management/user_list.html',data)
 
+@login_required
 def report_error(request):
     """Form for taking User Errors
     Parameters: HttpRequest object
@@ -347,6 +365,15 @@ def report_error(request):
     return render(request, 'purchase_order_management/report_error.html', data )
 
 
+def error_404(request,exception):
+    data = { }
+    return render(request, 'purchase_order_management/404.html', data )
+
+def error_500(request):
+    data = { }
+    return render(request, 'purchase_order_management/500.html', data )
+
+@login_required
 def purchase_order_form_submit(request):
     """Creates a new purchase order
         Parameters: request object.
