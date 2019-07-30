@@ -186,14 +186,15 @@ class RaiseUV(Process):
     (THERMAL,'thermal'),
     (CUSTOM,'custom')
     )
+
     raiseuv_type = models.CharField(choices= RAISEUV_CHOICES,max_length=100)
 
-    raiseuv_size = models.CharField(max_length=100)
-    raiseuv_no_of_sheets = models.IntegerField()
+    raiseuv_number_of_sheets = models.IntegerField()
     raiseuv_quantity = models.IntegerField()
     raiseuv_length = models.FloatField()
     raiseuv_breadth = models.FloatField()
     raiseuv_rate = models.FloatField()
+    raiseuv_impression = models.FloatField()
 
     def __str__(self):
         return str(self.pk)
@@ -258,13 +259,14 @@ class CTP(Process):
     # DataFields
     NEW = 'new'
     OLD = 'old'
-    ctp_size = models.CharField(max_length=100)
+    
     CTP_TYPE = (
         (NEW,'new'),
         (OLD,'old')
     )
+
     ctp_type = models.CharField(choices=CTP_TYPE, max_length=100)
-    ctp_no_of_plates = models.IntegerField()
+    ctp_number_of_plates = models.IntegerField()
     ctp_rate = models.FloatField()
     ctp_quantity = models.FloatField()
 
@@ -388,10 +390,9 @@ class SpecialProcess(Process):
         (DEBOSSING,'debossing'),
         (FOILING, 'foiling')
     )
-    special_process_type = models.CharField(choices=TYPE_CHOICES, max_length=100)
+    specialprocess_type = models.CharField(choices=TYPE_CHOICES, max_length=100)
     specialprocess_quantity = models.IntegerField()
     specialprocess_impression = models.FloatField()
-    specialprocess_size = models.CharField(max_length=100)
     specialprocess_rate = models.FloatField()
 
     def __str__(self):

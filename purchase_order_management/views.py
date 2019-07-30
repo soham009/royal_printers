@@ -1,5 +1,5 @@
 from django.shortcuts import render, get_object_or_404, get_list_or_404, HttpResponseRedirect
-from .models import PurchaseOrder, Client, Vendor, CustomUser, Paper, Process
+from .models import PurchaseOrder, Client, Vendor, CustomUser, Paper, Process, Binding, CTP, SpecialProcess, RaiseUV
 from bootstrap_modal_forms.generic import BSModalDeleteView, BSModalUpdateView, BSModalCreateView
 from django.urls import reverse_lazy, reverse
 from .forms import ClientForm, VendorForm, CustomUserForm, PurchaseOrderForm, ProcessForm
@@ -408,6 +408,81 @@ def purchase_order_form_submit(request):
                                     paper_color = paper_color, paper_gsm = paper_gsm,
                                      paper_number_of_sheets = paper_number_of_sheets,
                                      paper_rate = paper_rate,process_vendor_id = process_vendor_id, process_purchase_order_id = purchase_order)
+
+        if request.POST.get('binding_checkbox', False) == 'binding':
+            binding_pf = request.POST['binding_pf']
+            binding_type = request.POST['binding_type']
+            binding_product = request.POST['binding_product']
+            binding_quantity = request.POST['binding_quantity']
+            binding_binding_type = request.POST['binding_binding_type']
+            binding_rate = request.POST['binding_rate']
+
+
+            process_name = 'Binding'
+            process_vendor_id = Vendor.objects.get(pk=request.POST['binding_vendor'])
+            process_size = request.POST['binding_size']
+            process_amount = float(binding_rate)*int(binding_quantity)
+
+            binding = Binding.objects.create(process_name = process_name, process_size = process_size,
+                                    process_amount = process_amount, process_amount_due = process_amount,binding_quantity = binding_quantity,
+                                    binding_pf = binding_pf, binding_type = binding_type,
+                                    binding_product = binding_product, binding_binding_type = binding_binding_type,
+                                    binding_rate = binding_rate, process_vendor_id = process_vendor_id, process_purchase_order_id = purchase_order)
+
+        
+        if request.POST.get('ctp_checkbox', False) == 'ctp':
+            ctp_type = request.POST['ctp_type']
+            ctp_number_of_plates = request.POST['ctp_number_of_plates']
+            ctp_rate = request.POST['ctp_rate']
+            ctp_quantity = request.POST['ctp_quantity']
+
+            process_name = 'CTP'
+            process_vendor_id = Vendor.objects.get(pk=request.POST['ctp_vendor'])
+            process_size = request.POST['ctp_size']
+            process_amount = float(ctp_rate)*int(ctp_quantity)
+
+            ctp = CTP.objects.create(process_name = process_name, process_size = process_size,
+                                    process_amount = process_amount, process_amount_due = process_amount,
+                                    ctp_type = ctp_type, ctp_number_of_plates = ctp_number_of_plates, ctp_rate = ctp_rate,
+                                    ctp_quantity = ctp_quantity, process_vendor_id = process_vendor_id, process_purchase_order_id = purchase_order)
+
+        
+        if request.POST.get('specialprocess_checkbox', False) == 'specialprocess':
+            specialprocess_type = request.POST['specialprocess_type']
+            specialprocess_impression = request.POST['specialprocess_impression']
+            specialprocess_rate = request.POST['specialprocess_rate']
+            specialprocess_quantity = request.POST['specialprocess_quantity']
+
+            process_name = 'Special Process'
+            process_vendor_id = Vendor.objects.get(pk=request.POST['specialprocess_vendor'])
+            process_size = request.POST['specialprocess_size']
+            process_amount = float(specialprocess_rate)*float(specialprocess_impression)
+
+            specialprocess = SpecialProcess.objects.create(process_name = process_name, process_size = process_size,
+                                    process_amount = process_amount, process_amount_due = process_amount,
+                                    specialprocess_type = specialprocess_type, specialprocess_impression = specialprocess_impression, specialprocess_rate = specialprocess_rate,
+                                    specialprocess_quantity = specialprocess_quantity, process_vendor_id = process_vendor_id, process_purchase_order_id = purchase_order)
+
+        
+        if request.POST.get('raiseuv_checkbox', False) == 'raiseuv':
+            raiseuv_type = request.POST['raiseuv_type']
+            raiseuv_impression = request.POST['raiseuv_impression']
+            raiseuv_rate = request.POST['raiseuv_rate']
+            raiseuv_quantity = request.POST['raiseuv_quantity']
+            raiseuv_number_of_sheets = request.POST['raiseuv_number_of_sheets']
+            raiseuv_length = request.POST['raiseuv_length']
+            raiseuv_breadth = request.POST['raiseuv_breadth']
+
+            process_name = 'Raise UV'
+            process_vendor_id = Vendor.objects.get(pk=request.POST['raiseuv_vendor'])
+            process_size = request.POST['raiseuv_size']
+            process_amount = float(raiseuv_rate)*float(raiseuv_impression)
+
+            raiseuvuv = RaiseUV.objects.create(process_name = process_name, process_size = process_size,
+                                    process_amount = process_amount, process_amount_due = process_amount,
+                                    raiseuv_type = raiseuv_type, raiseuv_impression = raiseuv_impression, raiseuv_rate = raiseuv_rate,
+                                    raiseuv_quantity = raiseuv_quantity, raiseuv_number_of_sheets = raiseuv_number_of_sheets,raiseuv_length = raiseuv_length ,raiseuv_breadth = raiseuv_breadth, process_vendor_id = process_vendor_id, process_purchase_order_id = purchase_order)
+
 
     return HttpResponseRedirect(reverse('purchase_order_management:purchase_order_list'))
 
