@@ -89,7 +89,7 @@ class Printing(Process):
     # DataFields
     printing_quantity = models.IntegerField()
     printing_detail = models.CharField(max_length=300)
-    printing_no_of_cols = models.IntegerField()
+    printing_number_of_cols = models.IntegerField()
     printing_impression = models.FloatField()
     printing_rate = models.FloatField()
 
@@ -161,7 +161,7 @@ class Lamination(Process):
     lamination_type = models.CharField(choices=LAMINATION_CHOICES,max_length=100)
 
     lamination_size = models.CharField(max_length=100)
-    lamination_no_of_sheets = models.IntegerField()
+    lamination_number_of_sheets = models.IntegerField()
     lamination_quantity = models.IntegerField()
     lamination_length = models.FloatField()
     lamination_breadth = models.FloatField()
@@ -194,7 +194,6 @@ class RaiseUV(Process):
     raiseuv_length = models.FloatField()
     raiseuv_breadth = models.FloatField()
     raiseuv_rate = models.FloatField()
-    raiseuv_impression = models.FloatField()
 
     def __str__(self):
         return str(self.pk)
@@ -217,8 +216,7 @@ class Varnish(Process):
     )
     varnish_type = models.CharField(choices= VARNISH_CHOICES,max_length=100)
 
-    varnish_size = models.CharField(max_length=100)
-    varnish_no_of_sheets = models.IntegerField()
+    varnish_number_of_sheets = models.IntegerField()
     varnish_quantity = models.IntegerField()
     varnish_length = models.FloatField()
     varnish_breadth = models.FloatField()
@@ -243,9 +241,7 @@ class Positive(Process):
     (CUSTOM,'custom')
     )
     positive_type = models.CharField(choices= POSITIVE_CHOICES,max_length=100)
-
-    positive_size = models.CharField(max_length=100)
-    positive_no_of_sheets = models.IntegerField()
+    positive_number_of_sheets = models.IntegerField()
     positive_quantity = models.IntegerField()
     positive_length = models.FloatField()
     positive_breadth = models.FloatField()
@@ -277,7 +273,6 @@ class CTP(Process):
 class Cutting(Process):
 
     #DataFields
-    cutting_size = models.CharField(max_length=100)
     cutting_quantity = models.CharField(max_length=100)
     cutting_paper = models.CharField(max_length=100)
     cutting_rate = models.CharField(max_length=100)
@@ -288,7 +283,7 @@ class Cutting(Process):
 class Folding(Process):
 
     # DataFields
-    folding_no_of_folds = models.IntegerField()
+    folding_number_of_folds = models.IntegerField()
     folding_quantity = models.IntegerField()
     folding_rate = models.IntegerField()
     folding_impression = models.IntegerField()
@@ -300,8 +295,7 @@ class Pasting(Process):
 
     # DataFields
     pasting_impression = models.FloatField()
-    pasting_size = models.CharField(max_length=100)
-    pasting_no_of_pasting = models.IntegerField()
+    pasting_number_of_pasting = models.IntegerField()
     pasting_quantity = models.IntegerField()
     pasting_rate = models.FloatField()
 
@@ -312,7 +306,6 @@ class Creasing(Process):
 
     # DataFields
     creasing_impression = models.FloatField()
-    creasing_size = models.CharField(max_length=100)
     creasing_quantity = models.IntegerField()
     creasing_rate = models.FloatField()
 
@@ -323,16 +316,15 @@ class Punch(Process):
 
 
     # DataFields
-    punch_size = models.CharField(max_length=100)
-    punch_no_of = models.IntegerField()
+    punch_number_of_sheets = models.IntegerField()
 
     def __str__(self):
         return str(self.pk)
 
 class Block(Process):
+
     # DataFields
-    block_size = models.CharField(max_length=100)
-    block_no_of = models.IntegerField()
+    block_number_of_sheets = models.IntegerField()
 
     def __str__(self):
         return str(self.pk)
@@ -340,7 +332,6 @@ class Block(Process):
 class Punching(Process):
 
     # DataFields
-    punching_size = models.CharField(max_length=100)
     punching_quantity = models.IntegerField()
     punching_impression = models.FloatField()
     punching_rate = models.FloatField()
@@ -363,7 +354,6 @@ class FourCol(Process):
         (PAMP,'pamp')
     )
     fourcol_for = models.CharField(choices=FOR_CHOICES, max_length=100)
-    fourcol_size = models.FloatField()
     
     SINGLE = 'single'
     FRONTBACK = 'frontback'

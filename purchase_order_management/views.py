@@ -1,5 +1,5 @@
 from django.shortcuts import render, get_object_or_404, get_list_or_404, HttpResponseRedirect
-from .models import PurchaseOrder, Client, Vendor, CustomUser, Paper, Process, Binding, CTP, SpecialProcess, RaiseUV
+from .models import PurchaseOrder, Client, Vendor, CustomUser, Paper, Process, Binding, CTP, SpecialProcess, RaiseUV, Varnish, Lamination, Positive, Printing, Punching, Pasting, Folding, Creasing, Punch, Block, FourCol
 from bootstrap_modal_forms.generic import BSModalDeleteView, BSModalUpdateView, BSModalCreateView
 from django.urls import reverse_lazy, reverse
 from .forms import ClientForm, VendorForm, CustomUserForm, PurchaseOrderForm, ProcessForm
@@ -466,7 +466,6 @@ def purchase_order_form_submit(request):
         
         if request.POST.get('raiseuv_checkbox', False) == 'raiseuv':
             raiseuv_type = request.POST['raiseuv_type']
-            raiseuv_impression = request.POST['raiseuv_impression']
             raiseuv_rate = request.POST['raiseuv_rate']
             raiseuv_quantity = request.POST['raiseuv_quantity']
             raiseuv_number_of_sheets = request.POST['raiseuv_number_of_sheets']
@@ -476,12 +475,215 @@ def purchase_order_form_submit(request):
             process_name = 'Raise UV'
             process_vendor_id = Vendor.objects.get(pk=request.POST['raiseuv_vendor'])
             process_size = request.POST['raiseuv_size']
-            process_amount = float(raiseuv_rate)*float(raiseuv_impression)
+            process_amount = float(raiseuv_rate)*float(raiseuv_length)*float(raiseuv_breadth)*int(raiseuv_quantity)*0.01
 
-            raiseuvuv = RaiseUV.objects.create(process_name = process_name, process_size = process_size,
+            raiseuv = RaiseUV.objects.create(process_name = process_name, process_size = process_size,
                                     process_amount = process_amount, process_amount_due = process_amount,
-                                    raiseuv_type = raiseuv_type, raiseuv_impression = raiseuv_impression, raiseuv_rate = raiseuv_rate,
+                                    raiseuv_type = raiseuv_type, raiseuv_rate = raiseuv_rate,
                                     raiseuv_quantity = raiseuv_quantity, raiseuv_number_of_sheets = raiseuv_number_of_sheets,raiseuv_length = raiseuv_length ,raiseuv_breadth = raiseuv_breadth, process_vendor_id = process_vendor_id, process_purchase_order_id = purchase_order)
+
+            
+        if request.POST.get('varnish_checkbox', False) == 'varnish':
+            varnish_type = request.POST['varnish_type']
+            varnish_rate = request.POST['varnish_rate']
+            varnish_quantity = request.POST['varnish_quantity']
+            varnish_number_of_sheets = request.POST['varnish_number_of_sheets']
+            varnish_length = request.POST['varnish_length']
+            varnish_breadth = request.POST['varnish_breadth']
+
+            process_name = 'Varnish'
+            process_vendor_id = Vendor.objects.get(pk=request.POST['varnish_vendor'])
+            process_size = request.POST['varnish_size']
+            process_amount = float(varnish_rate)*float(varnish_length)*float(varnish_breadth)*int(varnish_quantity)*0.01
+
+            varnish = Varnish.objects.create(process_name = process_name, process_size = process_size,
+                                    process_amount = process_amount, process_amount_due = process_amount,
+                                    varnish_type = varnish_type, varnish_rate = varnish_rate,
+                                    varnish_quantity = varnish_quantity, varnish_number_of_sheets = varnish_number_of_sheets,varnish_length = varnish_length ,varnish_breadth = varnish_breadth, process_vendor_id = process_vendor_id, process_purchase_order_id = purchase_order)
+
+        if request.POST.get('lamination_checkbox', False) == 'lamination':
+            lamination_type = request.POST['lamination_type']
+            lamination_rate = request.POST['lamination_rate']
+            lamination_quantity = request.POST['lamination_quantity']
+            lamination_number_of_sheets = request.POST['lamination_number_of_sheets']
+            lamination_length = request.POST['lamination_length']
+            lamination_breadth = request.POST['lamination_breadth']
+
+            process_name = 'Lamination'
+            process_vendor_id = Vendor.objects.get(pk=request.POST['lamination_vendor'])
+            process_size = request.POST['lamination_size']
+            process_amount = float(lamination_rate)*float(lamination_length)*float(lamination_breadth)*int(lamination_quantity)*0.01
+
+            lamination = Lamination.objects.create(process_name = process_name, process_size = process_size,
+                                    process_amount = process_amount, process_amount_due = process_amount,
+                                    lamination_type = lamination_type, lamination_rate = lamination_rate,
+                                    lamination_quantity = lamination_quantity, lamination_number_of_sheets = lamination_number_of_sheets,lamination_length = lamination_length ,lamination_breadth = lamination_breadth, process_vendor_id = process_vendor_id, process_purchase_order_id = purchase_order)
+
+        if request.POST.get('positive_checkbox', False) == 'positive':
+            positive_type = request.POST['positive_type']
+            positive_rate = request.POST['positive_rate']
+            positive_quantity = request.POST['positive_quantity']
+            positive_number_of_sheets = request.POST['positive_number_of_sheets']
+            positive_length = request.POST['positive_length']
+            positive_breadth = request.POST['positive_breadth']
+
+            process_name = 'Positive'
+            process_vendor_id = Vendor.objects.get(pk=request.POST['positive_vendor'])
+            process_size = request.POST['positive_size']
+            process_amount = float(positive_rate)*float(positive_length)*float(positive_breadth)*int(positive_quantity)*0.01
+
+            positive = Positive.objects.create(process_name = process_name, process_size = process_size,
+                                    process_amount = process_amount, process_amount_due = process_amount,
+                                    positive_type = positive_type, positive_rate = positive_rate,
+                                    positive_quantity = positive_quantity, positive_number_of_sheets = positive_number_of_sheets,positive_length = positive_length ,positive_breadth = positive_breadth, process_vendor_id = process_vendor_id, process_purchase_order_id = purchase_order)
+        
+
+
+        if request.POST.get('printing_checkbox', False) == 'printing':
+            printing_rate = request.POST['printing_rate']
+            printing_quantity = request.POST['printing_quantity']
+            printing_number_of_cols = request.POST['printing_number_of_cols']
+            printing_detail = request.POST['printing_detail']
+            printing_rate = request.POST['printing_rate']
+            printing_impression = request.POST['printing_impression']
+
+            process_name = 'Printing'
+            process_vendor_id = Vendor.objects.get(pk=request.POST['printing_vendor'])
+            process_size = request.POST['printing_size']
+            process_amount = float(printing_rate)*float(printing_impression)
+
+            printing = Printing.objects.create(process_name = process_name, process_size = process_size,
+                                    process_amount = process_amount, process_amount_due = process_amount,
+                                    printing_rate = printing_rate, printing_quantity = printing_quantity, 
+                                    printing_number_of_cols = printing_number_of_cols, printing_detail = printing_detail ,printing_impression = printing_impression, process_vendor_id = process_vendor_id, process_purchase_order_id = purchase_order)
+
+
+        if request.POST.get('cutting_checkbox', False) == 'cutting':
+            cutting_rate = request.POST['cutting_rate']
+            cutting_quantity = request.POST['cutting_quantity']
+            cutting_paper = request.POST['cutting_paper']
+            cutting_rate = request.POST['cutting_rate']
+
+            process_name = 'Cutting'
+            process_vendor_id = Vendor.objects.get(pk=request.POST['cutting_vendor'])
+            process_size = request.POST['cutting_size']
+            process_amount = float(cutting_rate)*int(cutting_quantity)
+
+            cutting = Cutting.objects.create(process_name = process_name, process_size = process_size,
+                                    process_amount = process_amount, process_amount_due = process_amount,
+                                    cutting_rate = cutting_rate, cutting_quantity = cutting_quantity, 
+                                    cutting_paper = cutting_paper, process_vendor_id = process_vendor_id, process_purchase_order_id = purchase_order)
+
+        
+        if request.POST.get('punching_checkbox', False) == 'punching':
+            punching_rate = request.POST['punching_rate']
+            punching_quantity = request.POST['punching_quantity']
+            punching_impression = request.POST['punching_impression']
+            punching_rate = request.POST['punching_rate']
+
+            process_name = 'Punching'
+            process_vendor_id = Vendor.objects.get(pk=request.POST['punching_vendor'])
+            process_size = request.POST['punching_size']
+            process_amount = float(punching_rate)*float(punching_impression)
+
+            punching = Punching.objects.create(process_name = process_name, process_size = process_size,
+                                    process_amount = process_amount, process_amount_due = process_amount,
+                                    punching_rate = punching_rate, punching_quantity = punching_quantity, 
+                                    punching_impression = punching_impression, process_vendor_id = process_vendor_id, process_purchase_order_id = purchase_order)
+
+        
+        if request.POST.get('pasting_checkbox', False) == 'pasting':
+            pasting_rate = request.POST['pasting_rate']
+            pasting_quantity = request.POST['pasting_quantity']
+            pasting_impression = request.POST['pasting_impression']
+            pasting_rate = request.POST['pasting_rate']
+            pasting_number_of_pasting = request.POST['pasting_number_of_pasting']
+
+            process_name = 'Pasting'
+            process_vendor_id = Vendor.objects.get(pk=request.POST['pasting_vendor'])
+            process_size = request.POST['pasting_size']
+            process_amount = float(pasting_rate)*float(pasting_impression)
+
+            pasting = Pasting.objects.create(process_name = process_name, process_size = process_size,
+                                    process_amount = process_amount, process_amount_due = process_amount,
+                                    pasting_rate = pasting_rate, pasting_quantity = pasting_quantity, 
+                                    pasting_impression = pasting_impression, process_vendor_id = process_vendor_id, pasting_number_of_pasting = pasting_number_of_pasting, process_purchase_order_id = purchase_order)
+
+        if request.POST.get('folding_checkbox', False) == 'folding':
+            folding_rate = request.POST['folding_rate']
+            folding_quantity = request.POST['folding_quantity']
+            folding_impression = request.POST['folding_impression']
+            folding_rate = request.POST['folding_rate']
+            folding_number_of_folds = request.POST['folding_number_of_folds']
+
+            process_name = 'Folding'
+            process_vendor_id = Vendor.objects.get(pk=request.POST['folding_vendor'])
+            process_size = request.POST['folding_size']
+            process_amount = float(folding_rate)*float(folding_impression)
+
+            folding = Folding.objects.create(process_name = process_name, process_size = process_size,
+                                    process_amount = process_amount, process_amount_due = process_amount,
+                                    folding_rate = folding_rate, folding_quantity = folding_quantity, 
+                                    folding_impression = folding_impression, process_vendor_id = process_vendor_id, folding_number_of_folds = folding_number_of_folds, process_purchase_order_id = purchase_order)
+
+        if request.POST.get('creasing_checkbox', False) == 'creasing':
+            creasing_rate = request.POST['creasing_rate']
+            creasing_quantity = request.POST['creasing_quantity']
+            creasing_impression = request.POST['creasing_impression']
+
+            process_name = 'Creasing'
+            process_vendor_id = Vendor.objects.get(pk=request.POST['creasing_vendor'])
+            process_size = request.POST['creasing_size']
+            process_amount = float(creasing_rate)*float(creasing_impression)
+
+            creasing = Creasing.objects.create(process_name = process_name, process_size = process_size,
+                                    process_amount = process_amount, process_amount_due = process_amount,
+                                    creasing_rate = creasing_rate, creasing_quantity = creasing_quantity, 
+                                    creasing_impression = creasing_impression, process_vendor_id = process_vendor_id, process_purchase_order_id = purchase_order)
+
+
+        if request.POST.get('punch_checkbox', False) == 'punch':
+            punch_number_of_sheets = request.POST['punch_number_of_sheets']
+
+            process_name = 'Punch'
+            process_vendor_id = Vendor.objects.get(pk=request.POST['punch_vendor'])
+            process_size = request.POST['punch_size']
+            process_amount = request.POST['punch_amount']
+
+            punch = Punch.objects.create(process_name = process_name, process_size = process_size,
+                                    process_amount = process_amount, process_amount_due = process_amount,
+                                    punch_number_of_sheets = punch_number_of_sheets, process_vendor_id = process_vendor_id, process_purchase_order_id = purchase_order)
+
+
+        if request.POST.get('block_checkbox', False) == 'block':
+            block_number_of_sheets = request.POST['block_number_of_sheets']
+
+            process_name = 'Block'
+            process_vendor_id = Vendor.objects.get(pk=request.POST['block_vendor'])
+            process_size = request.POST['block_size']
+            process_amount = request.POST['block_amount']
+
+            block = Block.objects.create(process_name = process_name, process_size = process_size,
+                                    process_amount = process_amount, process_amount_due = process_amount,
+                                    block_number_of_sheets = block_number_of_sheets, process_vendor_id = process_vendor_id, process_purchase_order_id = purchase_order)
+
+
+        if request.POST.get('fourcol_checkbox', False) == 'fourcol':
+            fourcol_for = request.POST['fourcol_for']
+            fourcol_type = request.POST['fourcol_type']
+            fourcol_rate = request.POST['fourcol_rate']
+            fourcol_unit = request.POST['fourcol_unit']
+
+            process_name = '4col'
+            process_vendor_id = Vendor.objects.get(pk=request.POST['fourcol_vendor'])
+            process_size = request.POST['fourcol_size']
+            process_amount = float(fourcol_rate)*float(fourcol_unit)*1000
+
+            fourcol = FourCol.objects.create(process_name = process_name, process_size = process_size,
+                                    process_amount = process_amount, process_amount_due = process_amount,
+                                    fourcol_rate = fourcol_rate,fourcol_for = fourcol_for, fourcol_type = fourcol_type,
+                                    fourcol_unit = fourcol_unit, process_vendor_id = process_vendor_id, process_purchase_order_id = purchase_order)
+
 
 
     return HttpResponseRedirect(reverse('purchase_order_management:purchase_order_list'))
